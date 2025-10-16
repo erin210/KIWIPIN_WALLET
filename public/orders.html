@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>KIWI WALLET</title>
+    <script src="<%- wallet %>/assets/js/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="<%- wallet %>/assets/css/reset.css">
+    <link rel="stylesheet" href="<%- wallet %>/assets/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="<%- wallet %>/assets/css/select2.min.css" />
+    <link rel="stylesheet" href="<%- wallet %>/assets/css/wallet.css?v=241008">
+    <script>
+        function initFunction(jsonObj) {
+            renderInfo(jsonObj);
+        }
+    </script>
+</head>
+
+<body class="walletBody">
+    <div id="apiWallet">
+        <div class="container">
+            <aside>
+                <div class="logo">
+                    <img src="<%- wallet %>/assets/img/logo3.svg" alt="">
+                </div>
+                <div class="tabs tab_nnn">
+                    <div class="tab tab1">
+                        <a href="home">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_summery">
+                                <img src="<%- wallet %>/assets/img/icon_tab_summery.svg" alt="">
+                            </span>
+                            <h3><span>總覽</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab2 active">
+                        <a href="history">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_history">
+                                <img src="<%- wallet %>/assets/img/icon_tab_history.svg" alt="">
+                            </span>
+                            <h3><span>歷史交易</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab3">
+                        <a href="change_pay_password">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_lock">
+                                <img src="<%- wallet %>/assets/img/icon_tab_lock.svg" alt="">
+                            </span>
+                            <h3><span>交易設定</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab4">
+                        <a href="change_password">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_member">
+                                <img src="<%- wallet %>/assets/img/icon_tab_member.svg" alt="">
+                            </span>
+                            <h3><span>帳戶設定</span></h3>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+            <div class="tab_container">
+                <div class="loginBar">
+                    <div id="langSelect" class="languageBox">
+                        <img src="<%- wallet %>/assets/img/icon_language.svg" alt="" srcset="">
+                        <span class="lang_text">語言</span>
+                        <ul id="langListItem" class="langListItem">
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="imgbox">
+                            <img src="<%- wallet %>/assets/img/icon_member.svg" alt="">
+                        </span>
+                        <span id="userID">abc12345@gmail.com</span>
+                    </div>
+                </div>
+
+                <div class="scroll_bg">
+                    <!-- tab1 op-->
+                    <div id="tab1" class="tab_content">
+                        <div class="form-payment" onsubmit="return check_submit1();">
+                            <div class="form_list reg">
+                                <h4>歷史交易</h4>
+                            </div>
+                            <div class="history_list">
+                                <div class="list_PC">
+                                    <table id="historyTable"></table>
+                                </div>
+                                <div class="list_M" id="listArea">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- tab1 ed-->
+                </div>
+                <div id="pagination" class="pagination">
+                    <button type="button" id="prev" class="prev">
+                        <img id="prev_img" src="<%- wallet %>/assets/img/icon_prev_arrow.svg" alt="">
+                    </button>
+                    <div id="page" class="page"></div>
+                    <button type="button" id="next" class="next">
+                        <img id="next_img" src="<%- wallet %>/assets/img/icon_next_arrow.svg" alt="">
+                    </button>
+                </div>
+            </div>
+            <a href="mailto:service@kiwipin.com.tw" class="email_info">service@kiwipin.com.tw</a>
+        </div>
+    </div>
+
+    <script>
+        // $(function () {
+        //     $('base').attr('href', apiUrl);
+        // });
+        function renderInfo(json) {
+            var historyDATA = json.WALLET_HISTORY;
+            var amountHTML = '';
+            // console.log("原本拿到的數據：",historyDATA);
+            // 用來儲存分割後的結果
+            var result = [];
+
+            // 每次取 10 個物件，將它們推入 result 中作為一組
+            for (var i = 0; i < historyDATA.length; i += 10) {
+                result.push(historyDATA.slice(i, i + 10));
+            }
+            // console.log("分割後的：",result);
+            var PAGE_COUNT = result.length;
+            console.log("頁數：", PAGE_COUNT);
+            var PAGE_SELECT = 1;
+            dataPrint(PAGE_SELECT);
+            noMprePage();
+            //列印資料
+            function dataPrint(key) {
+                const tableTH = `<tr class="list_th">
+                                <th class="acc_date">交易日期</th>
+                                <th class="acc_name">服務名稱</th>
+                                <th class="acc_product">商品名稱</th>
+                                <th class="acc_order">訂單編號</th>
+                                <th class="acc_point">交易點數</th>
+                                <th class="acc_balance">剩餘點數</th>
+                            </tr>`;
+
+                $('#historyTable').append(tableTH);
+                // PC table
+                result[key - 1].forEach(item => {
+                    const dateFormat = formatTime(item.CreateTime_at);
+                    AMOUNT_FORMAT(item.AMOUNT_ADD_USE);
+
+
+                    const tableHTML = `<tr>
+                                    <td class="acc_date">${dateFormat}</td>
+                                    <td class="acc_name">${item.CID_NAME}</td>
+                                    <td class="acc_product">${item.PRODUCT_NAME}</td>
+                                    <td class="acc_order">${item.COID}</td>
+                                    <td class="acc_point">${amountHTML}</td>
+                                    <td class="acc_balance">${item.AMOUNT_AFTER}</td>
+                                </tr>`;
+                    $('#historyTable').append(tableHTML);
+                    noMprePage();
+                });
+
+
+                //M list
+                // 使用分組函數
+                const newDATA = groupByYearMonth(result[key - 1]);
+
+                // 抓取所有 key 和 對應的物件
+                const keys = Object.keys(newDATA); // 取得所有 key
+
+                for (let i = 0; i < keys.length; i++) {
+                    const key = keys[i]; // 取得當前的 key
+                    const month = key.replace('-', ' ');
+                    const listTitle_HTML = `
+                        <h5>${month}月</h5>
+                        <ul id="listDATA${key}">
+                        </ul>`;
+                    $('#listArea').append(listTitle_HTML);
+
+
+                    const keysList = newDATA[key]; // 取得該 key 對應的物件
+                    keysList.forEach(item => {
+                        AMOUNT_FORMAT(item.AMOUNT_ADD_USE);
+                        const dateHTML = item.CreateTime_at.substring(5);
+
+                        const listINFO_HTML = `<li>
+                                <div class="list_head">
+                                    <div>
+                                        <span class="list_text_left acc_name">${item.CID_NAME}</span>
+                                        <span class="list_text_right">
+                                            <i class="imgbox">
+                                                <img src="<%- wallet %>/assets/img/icon_dropdown.svg" alt="">
+                                            </i>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="list_text_left acc_date">${dateHTML}</span>
+                                        <span class="list_text_right acc_point">${amountHTML}</span>
+                                    </div>
+                                </div>
+                                <div class="list_content">
+                                    <div>
+                                        <span class="list_text_left">訂單編號</span>
+                                        <span class="list_text_right">${item.COID}</span>
+                                    </div>
+                                    <div>
+                                        <span class="list_text_left">商品名稱</span>
+                                        <span class="list_text_right acc_product">${item.PRODUCT_NAME}</span>
+                                    </div>
+                                    <div>
+                                        <span class="list_text_left">剩餘點數</span>
+                                        <span class="list_text_right acc_balance">${item.AMOUNT_AFTER}</span>
+                                    </div>
+                                </div>
+                            </li>`;
+                        $('#listDATA' + key).append(listINFO_HTML);
+                    });
+
+                }
+
+                // 分組函數
+                function groupByYearMonth(data) {
+                    const groupedData = {};
+
+                    data.forEach(item => {
+                        const [year, month] = item.CreateDate_at.split('-');
+                        const key = `${year}-${month}`;
+
+                        if (!groupedData[key]) {
+                            groupedData[key] = [];
+                        }
+
+                        groupedData[key].push(item);
+                    });
+
+                    return groupedData;
+                }
+
+                $('.list_head').on('click', function () {
+                    // $('.list_content').hide();
+                    $(this).find('.imgbox').toggleClass('rotate');
+                    $(this).siblings('.list_content').toggleClass('show');
+                });
+            }
+
+            //判斷 ＋ 或 -
+            function AMOUNT_FORMAT(amount) {
+                if (amount.charAt(0) !== '-') {
+                    amountHTML = '<i class="icon account_add"><img src="<%- wallet %>/assets/img/icon_account_add.svg" alt=""></i><b>' + amount + '</b>';
+                } else {
+                    amountHTML = '<i class="icon account_deduct"><img src="<%- wallet %>/assets/img/icon_account_deduct.svg" alt=""></i><b>' + amount + '</b>';
+                }
+            }
+
+            //千元標註
+            function formatCurrency(number) {
+                // 確保 number 是一個整數
+                if (!Number.isInteger(number)) return null;
+
+                // 將整數轉成字串，並利用正規表達式添加逗號
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            //時間標註
+            function formatTime(tt) {
+                const dateTime = tt;
+                const [datePart, timePart] = dateTime.split(" ");
+                const formattedDateTime = `${datePart} <span>${timePart}</span>`;
+                return formattedDateTime;
+            }
+
+
+
+
+            // 下方選擇頁面 op
+
+
+            // 頁數-----
+            // let $pageDiv = $("<div>", { id: "page", class: "page" });
+
+            // 建立頁碼-----
+            for (let i = 1; i <= PAGE_COUNT; i++) {
+                const pageNumber = i;
+                let pageLinks = $("<span>", { id: "page_div_" + pageNumber });
+                pageLinks.text(pageNumber);
+
+                pageLinks.on("click", function () {
+                    changePage(pageNumber);
+                });
+
+                if (PAGE_SELECT === pageNumber) {
+                    pageLinks.addClass("active");
+                }
+                // $pageDiv.append(pageLinks);
+
+                $("#page").append(pageLinks);
+            }
+
+            function changePage(page) {
+                PAGE_SELECT = page;
+                $('#historyTable tr').fadeOut(200, function () {
+                    $(this).remove(); // 清空內容
+                });
+
+                $('#listArea h5, #listArea ul').fadeOut(200, function () {
+                    $(this).remove(); // 清空內容
+                });
+
+                setTimeout(function () {
+                    dataPrint(PAGE_SELECT);
+                    $("#page span").removeClass("active");
+                    $("#page_div_" + page).addClass("active");
+
+                    // 淡入效果
+                    $('#historyTable tr:not(.list_th)').hide().fadeIn(300);
+                    $('#listArea h5, #listArea ul').hide().fadeIn(300);
+
+                    noMprePage();
+                }, 300); // 延遲時間與 fadeOut 時間一致
+            }
+
+            // 下方選擇頁面 ed
+            $("#prev").on("click", function () {
+                changePage(Number(PAGE_SELECT) - 1);
+                noMprePage();
+            });
+            $("#next").on("click", function () {
+                changePage(Number(PAGE_SELECT) + 1);
+                noMprePage();
+            });
+
+            //判斷第幾頁
+            function noMprePage() {
+                // 判斷是否禁用 "prev" 和 "next" 按鈕
+                $("#prev").attr('disabled', PAGE_SELECT <= 1);
+                $("#next").attr('disabled', PAGE_SELECT >= PAGE_COUNT);
+            }
+
+        }
+
+        //密碼眼睛
+        $('#togglePassword').on('click', function () {
+            const passwordField = $('#U_PINCODE');
+            const isPasswordVisible = passwordField.attr('type') === 'text';
+            passwordField.attr('type', isPasswordVisible ? 'password' : 'text');
+
+            const newIconSrc = isPasswordVisible ? pageBaseUrl + '/assets/img/icon_eye_close.svg' : pageBaseUrl + '/assets/img/icon_eye_open.svg';
+            $(this).attr('src', newIconSrc);
+        });
+
+        function switchTab(tab) {
+            $(".tab_content").hide();
+            $("#" + tab).fadeIn();
+            $("div.tabs div").removeClass("active");
+            $("." + tab).addClass("active");
+        }
+
+
+        function appendElement_Input(ele, name, value) {
+            var textHtml = '<input type="hidden" name="' + name + '"';
+            textHtml += ' value="' + value + '"';
+            textHtml += '/>';
+            $(ele).append(textHtml);
+        }
+
+
+    </script>
+
+    <script>
+        initFunction({
+            "Tpye": "HISTORY",
+            "PAGE_COUNT": "",
+            "PAGE_SELECT": 0,
+            "WALLET_HISTORY": [
+                {
+                    "serial": 1,
+                    "CID_NAME": "XX遊戲儲值",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "升級鑽石寶物50顆",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "500",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "-500",
+                    "AMOUNT_AFTER": "100",
+                    "CreateTime_at": "2024-08-15 12:11:06",
+                    "CreateDate_at": "2024-08-15"
+                },
+                {
+                    "serial": 2,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-08-14 12:11:06",
+                    "CreateDate_at": "2024-08-14"
+                },
+                {
+                    "serial": 3,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-07-15 12:11:06",
+                    "CreateDate_at": "2024-07-15"
+                },
+                {
+                    "serial": 4,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-07-15 12:11:06",
+                    "CreateDate_at": "2024-07-15"
+                },
+                {
+                    "serial": 5,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-07-15 12:11:06",
+                    "CreateDate_at": "2024-07-15"
+                },
+                {
+                    "serial": 6,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-06-15 12:11:06",
+                    "CreateDate_at": "2024-06-15"
+                },
+                {
+                    "serial": 7,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-06-15 12:11:06",
+                    "CreateDate_at": "2024-06-15"
+                },
+                {
+                    "serial": 8,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-06-15 12:11:06",
+                    "CreateDate_at": "2024-06-15"
+                },
+                {
+                    "serial": 9,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-05-15 12:11:06",
+                    "CreateDate_at": "2024-05-15"
+                },
+                {
+                    "serial": 10,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-05-15 12:11:06",
+                    "CreateDate_at": "2024-05-15"
+                },
+                {
+                    "serial": 11,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-05-15 12:11:06",
+                    "CreateDate_at": "2024-05-15"
+                },
+                {
+                    "serial": 12,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-05-15 12:11:06",
+                    "CreateDate_at": "2024-05-15"
+                },
+                {
+                    "serial": 13,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-04-15 12:11:06",
+                    "CreateDate_at": "2024-04-15"
+                },
+                {
+                    "serial": 14,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-04-15 12:11:06",
+                    "CreateDate_at": "2024-04-15"
+                },
+                {
+                    "serial": 15,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-03-15 12:11:06",
+                    "CreateDate_at": "2024-03-15"
+                },
+                {
+                    "serial": 16,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-03-15 12:11:06",
+                    "CreateDate_at": "2024-03-15"
+                },
+                {
+                    "serial": 17,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-03-15 12:11:06",
+                    "CreateDate_at": "2024-03-15"
+                },
+                {
+                    "serial": 18,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-02-15 12:11:06",
+                    "CreateDate_at": "2024-02-15"
+                },
+                {
+                    "serial": 19,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-01-15 12:11:06",
+                    "CreateDate_at": "2024-01-15"
+                },
+                {
+                    "serial": 20,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2024-01-15 12:11:06",
+                    "CreateDate_at": "2024-01-15"
+                },
+                {
+                    "serial": 21,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2023-12-15 12:11:06",
+                    "CreateDate_at": "2023-12-15"
+                },
+                {
+                    "serial": 22,
+                    "CID_NAME": "KIWI Test",
+                    "COID": "KW20240815041007",
+                    "PRODUCT_NAME": "KIWI \u9322\u5305 100 \u9ede",
+                    "AMOUNT_BEFORE": "0",
+                    "AMOUNT_ADD": "1000",
+                    "AMOUNT_USE": "0",
+                    "AMOUNT_ADD_USE": "1000",
+                    "AMOUNT_AFTER": "900",
+                    "CreateTime_at": "2023-11-15 12:11:06",
+                    "CreateDate_at": "2023-11-15"
+                }
+            ]
+        });
+    </script>
+</body>
+
+</html>

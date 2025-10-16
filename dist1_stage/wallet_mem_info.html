@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<title>KIWI WALLET</title>
+</script>
+<link rel="icon" href="https://stage-wallet-page.kiwipin.com/favicon.png">
+<link rel="icon" href="https://stage-wallet-page.kiwipin.com/favicon.ico">
+<script src="https://stage-wallet-page.kiwipin.com/assets/js/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://stage-wallet-page.kiwipin.com/assets/css/reset.css">
+<link rel="stylesheet" href="https://stage-wallet-page.kiwipin.com/assets/css/bootstrap-grid.css">
+<link rel="stylesheet" href="https://stage-wallet-page.kiwipin.com/assets/css/select2.min.css" />
+<link rel="stylesheet" href="https://stage-wallet-page.kiwipin.com/assets/css/wallet.css">
+<script src="https://stage-wallet-page.kiwipin.com/assets/js/translate.js"></script>
+<script src="https://stage-wallet-page.kiwipin.com/assets/js/loadingoverlay.min.js"></script>
+<script>
+    function initFunction(jsonObj) {
+        renderInfo(jsonObj);
+    }
+</script>
+</head>
+
+<body class="walletBody">
+    <div id="apiWallet">
+        <div class="container">
+            <aside>
+                <div class="logo">
+                    <img src="https://stage-wallet-page.kiwipin.com/assets/img/logo3.svg" alt="">
+                </div>
+                <div class="tabs tab_nnn">
+                    <div class="tab tab1 active">
+                        <a href="home">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_summery">
+                                <img src="https://stage-wallet-page.kiwipin.com/assets/img/icon_tab_summery.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_HOME">總覽</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab2">
+                        <a href="history">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_history">
+                                <img src="https://stage-wallet-page.kiwipin.com/assets/img/icon_tab_history.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_HISTORY">歷史交易</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab3">
+                        <a href="change_pay_password">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_lock">
+                                <img src="https://stage-wallet-page.kiwipin.com/assets/img/icon_tab_lock.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_CHANGE_PAY_PASSWORD">交易設定</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab4">
+                        <a href="change_password">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_member">
+                                <img src="https://stage-wallet-page.kiwipin.com/assets/img/icon_tab_member.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_CHANGE_PASSWORD">帳戶設定</span></h3>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="tab_container">
+                <div class="loginBar">
+                    <div id="langSelect" class="languageBox">
+                        <img src="https://stage-wallet-page.kiwipin.com/assets/img/icon_language.svg" alt="" srcset="">
+                        <span class="lang_text">語言</span>
+                        <ul id="langListItem" class="langListItem">
+                            <ul id="landList">
+                                <li class="active">
+                                    简中
+                                </li>
+                                <li>
+                                    English
+                                </li>
+                                <li>
+                                    日本語
+                                </li>
+                                <li>
+                                    한국어
+                                </li>
+                                <li>
+                                    Tiếng Việt
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="imgbox">
+                            <img src="https://stage-wallet-page.kiwipin.com/assets/img/icon_member.svg" alt="">
+                        </span>
+                        <span id="userID">abc12345@gmail.com</span>
+                        <a href="logout" id="logOutBTN" class="WL_LOGOUT">登出</a>
+                    </div>
+                </div>
+
+                <div class="scroll_bg">
+                    <!-- tab1 op-->
+                    <div id="tab1" class="tab_content">
+                        <div class="form-payment" onsubmit="return check_submit1();">
+                            <div class="form_list reg">
+                                <h4 class="WL_SUMMARY">錢包總覽</h4>
+                            </div>
+                            <div class="summery_top">
+                                <div class="point_info">
+                                    <a id="confirm" href="purchase" class="btn btn_blue confirm">
+                                        <span class="imgbox">
+                                            <img src="https://stage-wallet-page.kiwipin.com/assets/img/icon_add.svg" alt="">
+                                        </span>
+                                        <b class="WL_TAB_TOPUP">儲值</b>
+                                    </a>
+                                    <p class="point_label">
+                                        <span class="imgbox">
+                                            <img src="https://stage-wallet-page.kiwipin.com/assets/img/icon_light.svg" alt="">
+                                        </span>
+                                        <b class="WL_BALANCE">錢包餘額</b>
+                                    </p>
+                                    <p>
+                                        |
+                                    </p>
+                                    <p class="point_amount"><span id="U_KIWI_POINT"></span><b class="WL_POINT">點</b></p>
+                                </div>
+                            </div>
+                            <div class="form_list reg">
+                                <h4></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- tab1 ed-->
+                </div>
+            </div>
+            <a href="mailto:service@kiwipin.com.tw" class="email_info">service@kiwipin.com.tw</a>
+        </div>
+    </div>
+
+    <script>
+        // $(function () {
+        //     $('base').attr('href', apiUrl);
+        // });
+
+        //從result回來，對照參數
+        var params = new URLSearchParams(window.location.search);
+        var activeTab = params.get('activeTab');
+
+
+        if (!activeTab == null) {
+            switchTab(activeTab);
+        }
+
+        function renderInfo(json) {
+            
+
+            var amountNUM = Number(json.U_KIWI_POINT);
+            $('#f_data').val(json.data);
+            $('#b_data').val(json.data);
+            $('.point_amount span').html(formatCurrency(amountNUM));
+            $('#buy_pin_amount').text(json.AMOUNT);
+
+
+
+            Object.keys(json).forEach(function (k) {
+                var eleName = '#' + k;
+                // console.log(eleName + ' - ' + json[k]);
+                if ($(eleName).length <= 0) {
+                    appendElement_Input('#form', k, json[k]);
+                } else {
+                    $(eleName).val(json[k]);
+                }
+            });
+            //千元標註
+            function formatCurrency(number) {
+                // 確保 number 是一個整數
+                if (!Number.isInteger(number)) return null;
+
+                // 將整數轉成字串，並利用正規表達式添加逗號
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            $('#userID').text(json.U_EMAIL);
+            
+            initTranslation(json)//翻譯
+
+        }
+
+
+        //手機點擊語言
+        // $('#langSelect').on('click',function(){
+        //     console.log("open");
+        //     $('#langListItem').hide().slideToggle(200);
+        // });
+        //密碼眼睛
+        let pageBaseUrl = '';
+        $('#togglePassword').on('click', function () {
+            const passwordField = $('#U_PINCODE');
+            const isPasswordVisible = passwordField.attr('type') === 'text';
+            passwordField.attr('type', isPasswordVisible ? 'password' : 'text');
+
+            const newIconSrc = isPasswordVisible ? pageBaseUrl + 'https://stage-wallet-page.kiwipin.com/assets/img/icon_eye_close.svg' : pageBaseUrl + 'https://stage-wallet-page.kiwipin.com/assets/img/icon_eye_open.svg';
+            $(this).attr('src', newIconSrc);
+        });
+
+        function switchTab(tab) {
+            $(".tab_content").hide();
+            $("#" + tab).fadeIn();
+            $("div.tabs div").removeClass("active");
+            $("." + tab).addClass("active");
+        }
+
+
+        function appendElement_Input(ele, name, value) {
+            var textHtml = '<input type="hidden" name="' + name + '"';
+            textHtml += ' value="' + value + '"';
+            textHtml += '/>';
+            $(ele).append(textHtml);
+        }
+
+
+    </script>
+
+    <script>
+        
+    </script>
+</body>
+
+</html>

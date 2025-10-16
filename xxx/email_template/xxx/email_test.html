@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>email test</title>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("zIOne8x8U2UzLn-rQ"); // 這裡是你的使用者 ID
+    </script>
+</head>
+
+<body>
+    <!-- HTML 表單 -->
+    <form id="email-buy_ok">
+        <!-- <h2>01購買成功 / 05帳戶密碼</h2> -->
+        <input type="text" name="to_name" placeholder="收件者名稱" value="erin210210@icloud.com" required />
+        <button type="submit">寄出 Email</button>
+    </form>
+
+    <!-- <form id="email-rsg_verify">
+        <h2>02註冊驗證碼 / 03密碼驗證碼 / 04交易密碼</h2>
+        <input type="text" name="to_name" placeholder="收件者名稱" value="erin210210@icloud.com" required />
+        <button type="submit">寄出 Email</button>
+    </form> -->
+
+    <!-- EmailJS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <script>
+        // 初始化 EmailJS
+        emailjs.init("zlOne8x8U2UzLn-rQ");
+
+        // 表單送出事件
+        //01購買成功
+        document.getElementById("email-buy_ok").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            emailjs.send("service_5050", "template-buy_ok")  // ← 換成你剛剛建立的 template ID
+                .then(() => alert("✅ Email 已寄出"))
+                .catch(err => alert("❌ 發送錯誤：" + err.text));
+        });
+
+        //02註冊驗證碼
+        // document.getElementById("email-rsg_verify").addEventListener("submit", function (e) {
+        //     e.preventDefault();
+
+        //     emailjs.send("service_5050", "template-rsg_verify")  // ← 換成你剛剛建立的 template ID
+        //         .then(() => alert("✅ Email 已寄出"))
+        //         .catch(err => alert("❌ 發送錯誤：" + err.text));
+        // });
+    </script>
+
+
+</body>
+
+
+</html>

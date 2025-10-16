@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<title>KIWI WALLET</title>
+</script>
+<link rel="icon" href="https://wallet-page.kiwipin.com//favicon.png">
+<link rel="icon" href="https://wallet-page.kiwipin.com//favicon.ico">
+<script src="https://wallet-page.kiwipin.com//assets/js/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://wallet-page.kiwipin.com//assets/css/reset.css">
+<link rel="stylesheet" href="https://wallet-page.kiwipin.com//assets/css/bootstrap-grid.css">
+<link rel="stylesheet" href="https://wallet-page.kiwipin.com//assets/css/select2.min.css" />
+<link rel="stylesheet" href="https://wallet-page.kiwipin.com//assets/css/wallet.css">
+<script src="https://wallet-page.kiwipin.com//assets/js/translate.js"></script>
+<script src="https://wallet-page.kiwipin.com//assets/js/loadingoverlay.min.js"></script>
+<script>
+    function initFunction(jsonObj) {
+        renderInfo(jsonObj);
+    }
+</script>
+</head>
+
+<body class="walletBody">
+    <div id="apiWallet">
+        <div class="container">
+            <aside>
+                <div class="logo">
+                    <img src="https://wallet-page.kiwipin.com//assets/img/logo3.svg" alt="">
+                </div>
+                <div class="tabs">
+                    <div class="tab tab1 active" rel="tab1">
+                        <a href="javascript:void(0)">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_add">
+                                <img src="https://wallet-page.kiwipin.com//assets/img/icon_tab_add.svg" alt="">
+                            </span>
+                            <h3><span class="WL_CHECK_PAYMENT">交易確認</span></h3>
+                        </a>
+                    </div>
+                    <!-- <div class="tab tab2" rel="tab2">
+                        <i class="oo1"></i>
+                        <i class="oo2"></i>
+                        <span class="imgbox">
+                            <img src="https://wallet-page.kiwipin.com//assets/img/icon_tab_add.svg" alt="">
+                        </span>
+                        <h3><span>購買</span></h3>
+                    </div> -->
+                </div>
+            </aside>
+            <div class="tab_container">
+                <div class="loginBar">
+                    <div id="langSelect" class="languageBox">
+                        <img src="https://wallet-page.kiwipin.com//assets/img/icon_language.svg" alt="" srcset="">
+                        <span class="lang_text">語言</span>
+                        <ul id="langListItem" class="langListItem">
+                            <ul id="landList">
+                                <li class="active">
+                                    简中
+                                </li>
+                                <li>
+                                    English
+                                </li>
+                                <li>
+                                    日本語
+                                </li>
+                                <li>
+                                    한국어
+                                </li>
+                                <li>
+                                    Tiếng Việt
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="imgbox">
+                            <img src="https://wallet-page.kiwipin.com//assets/img/icon_member.svg" alt="">
+                        </span>
+                        <span id="userID">abc12345@gmail.com</span>
+                        <a href="logout" id="logOutBTN" class="WL_LOGOUT">登出</a>
+                    </div>
+                </div>
+                <div class="scroll_bg outside">
+                    <!-- tab1 op-->
+                    <div id="tab1" class="tab_content">
+                        <form role="form" id="form" action="" method="post" target="_self" class="form-payment form_result"
+                            onsubmit="return check_submit();">
+                            <!-- <div class="form_list reg">
+                                <h4 class="WL_CHECK_PAYMENT">交易確認</h4>
+                            </div> -->
+                            <div class="result_message">
+                                <img id="Notify_Icon" src="https://wallet-page.kiwipin.com//assets/img/icon_success.svg" alt="">
+                                <span id="Notify_Title" class="WL_CHECK_PAYMENT">交易確認</span>
+                                <small id="Notify_Info">說明文字</small>
+                                </span>
+                            </div>
+                            <div class="result_info deduct_info">
+                            </div>
+                            
+                            <div class="deduct_pw pay_pw">
+                                <span class="WL_CHECK_U_PAY_PASSWORD_TITLE">請輸入交易密碼</span>
+                                <div class="code_PW">
+                                    <input class="input_original_visible WL_CHECK_U_PAY_PASSWORD_HINT" type="password" name="U_PAY_PASSWORD"
+                                        inputmode="numeric" id="U_PAY_PASSWORD" placeholder="提示文字" maxlength="6">
+                                    <img class="togglePassword" src="https://wallet-page.kiwipin.com//assets/img/icon_eye_close.svg" alt="eye">
+                                </div>
+                                
+                                <div class="wrong_msg pay_password_msg" style="display:none"><i class="icon"><img
+                                            src="https://wallet-page.kiwipin.com//assets/img/icon_error.svg"></i>
+                                        <small class="pay_password_msg_text WL_U_PAY_PASSWORD_MSG_EMPTY">空白警告</small>
+                                        <small class="pay_password_msg_text WL_U_PAY_PASSWORD_MSG_ERROR">格式錯誤警告</small>
+                                        <small class="pay_password_msg_text WL_CHECK_U_PAY_PASSWORD_HINT_F">SYSTEM_MESSAGE 次數</small>
+                                        <small class="pay_password_msg_text WL_CHECK_U_PAY_PASSWORD_HINT_F_END">SYSTEM_MESSAGE 達上限</small>
+                                </div>
+                            </div>
+                            <div class="form_bt btn_center">
+                                <button type="submit" id="confirm" href="javascript:void(0)" class="btn btn_blue WL_CHECK_BTN" onclick="return check_submit();">確認交易</button>
+                                <a href="javascript:void(0)" id="cancel" class="btn btn_blue cancel WL_CANCEL_BTN" onclick="return cancel_submit();">取消交易</a>
+                                <div class="btn_group">
+                                    <a href="javascript:void(0)" class="btn btn_blue cancel WL_CANCEL_BTN" onclick="return cancel_submit();">取消交易</a>
+                                    <a href="purchase" target="_blank" class="btn btn_blue WL_TOPUP_BTN">前往儲值</a>
+                                </div>
+                            </div>
+                            <input type="hidden" name="data" id="f_data" value="">
+                            <input type="hidden" name="U_CANCEL" id="U_CANCEL" value="">
+                        </form>
+
+                    </div>
+                    <!-- tab1 ed-->
+                 </div>
+            </div>
+            <a href="mailto:service@kiwipin.com.tw" class="email_info">service@kiwipin.com.tw</a>
+        </div>
+    </div>
+
+    <script>
+
+        function renderInfo(json) {
+            // var dataStatus = json.PAY_STATUS;
+            
+            //解構parseSystemMessage
+            const { id: RESULT_ID, msg: RESULT_MSG } = parseSystemMessage(json.SYSTEM_MESSAGE) || {};
+            $('#U_CANCEL').val(RESULT_ID);
+            
+            const dataDEDUCT = {
+                "WL_DEDUCT_AMOUNT_TITLE": json.DEDUCT_AMOUNT,
+                "WL_WALLET_AMOUNT_TITLE": json.WALLET_AMOUNT,
+                "WL_CID_NAME_TITLE": json.CID_NAME,
+                "WL_PRODUCT_NAME_TITLE": json.PRODUCT_NAME
+            }
+            // console.log(dataDEDUCT);
+            
+            resultINFO(dataDEDUCT, json);
+            $('.result_info').removeAttr('id', "ERROR_INFO");
+            if (json.MESSAGE_TYPE !== null && json.MESSAGE_TYPE !== undefined) {
+                // $(".popup_icon").hide();
+                if (json.MESSAGE_TYPE == "F") {
+                    $('#Notify_Icon').attr("src", "https://wallet-page.kiwipin.com//assets/img/icon_error.svg");
+                    $("#Notify_Title").attr('class', 'WL_CHECK_PAYMENT_F').css({ 'color': 'var(--error)'});
+                    $('#Notify_Info').show().attr('class', 'WL_CHECK_REMIND_F');//上方提醒文字
+                    $('.deduct_pw').hide();
+                    $('#confirm').hide();//單獨確認交易
+                    $('#cancel').hide();//單獨取消交易
+                    $('.btn_group').show();//取消＋儲值
+                }
+                // console.log('systemMSG', systemMSG);
+                // $("#Notify_Icon").html(`<b class="${RESULT_ID}"></b>${RESULT_MSG}`);
+                // $("#popup").show();
+            }else{
+                $('#Notify_Icon').attr("src", "https://wallet-page.kiwipin.com//assets/img/icon_success.svg");
+                $("#Notify_Title").attr('class', 'WL_CHECK_PAYMENT');
+                $(".popup_icon_error").show();
+                $("#popup_title").attr('class', 'title WL_VERIFY_TITLE_F');
+                $('#Notify_Info').hide();//上方提醒文字
+                $("#popup_a").attr("href", "javascript:void(0)");
+                $('#U_PAY_PASSWORD').val('');
+                $('.deduct_pw').show();
+                $('#confirm').show();//單獨確認交易
+                $('#cancel').hide();//單獨取消交易
+                $('.btn_group').hide();//取消＋儲值
+            }
+
+            //判斷SYSTEM_MESSAGE
+            if (json.SYSTEM_MESSAGE !== null && json.SYSTEM_MESSAGE !== undefined) {
+                if (RESULT_ID === "WL_CHECK_U_PAY_PASSWORD_HINT_F") {
+                    // 還有
+                    $('.pay_password_msg_text').hide();
+                    $('.pay_password_msg_text.WL_CHECK_U_PAY_PASSWORD_HINT_F').show().parent().show();
+                    // $('#confirm').removeClass('disabled').attr('disabled', false);
+                    $('input[name=U_PAY_PASSWORD]').attr('disabled',false);
+                    $('#confirm').show();//單獨確認交易
+                    $('#cancel').hide();//單獨取消交易
+                    // $('.email_msg').show();
+                } else if (RESULT_ID === "WL_CHECK_U_PAY_PASSWORD_HINT_F_END") {
+                    $('.pay_password_msg_text').hide();
+                    $('.pay_password_msg_text.WL_CHECK_U_PAY_PASSWORD_HINT_F_END').show().parent().show();
+                    $('input[name=U_PAY_PASSWORD]').prop('disabled',true);
+                    $('#confirm').hide();//單獨確認交易
+                    $('#cancel').show();//單獨取消交易
+
+                }
+            }
+
+            Object.keys(json).forEach(function (k) {
+                var eleName = '#' + k;
+                if ($(eleName).length <= 0) {
+                    appendElement_Input('#form', k, json[k]);
+                } else {
+                    $(eleName).val(json[k]);
+                }
+            });
+            
+            $('#userID').text(json.U_EMAIL);
+            
+            initTranslation(json)//翻譯
+
+                // console.log(RESULT_ARRAY);
+                // let langString=$('.pay_password_msg_text.WL_CHECK_U_PAY_PASSWORD_HINT_F').text();
+                // let newTEXT = replacePlaceholders(langString, RESULT_ARRAY);
+                // console.log(newTEXT);
+
+                // replacePlaceholders(langString, RESULT_ARRAY);
+                // $('.pay_password_msg_text.WL_CHECK_U_PAY_PASSWORD_HINT_F').text(newTEXT);
+            
+
+        }
+
+        //整理 SYSTEM_MESSAGE-ID+系統字
+        function parseSystemMessage(systemMessage) {
+            if (!systemMessage) return null;
+
+            // 解析 [%ID%] 後面的字串
+            const matchId = systemMessage.match(/\[%(.+?)%\](.*)/);
+
+            if (!matchId) return null;
+
+            const RESULT_ID = matchId[1];
+            const RESULT_MSG = (matchId[2] || "").trim();
+
+            return { id: RESULT_ID, msg: RESULT_MSG };
+        }
+    
+
+
+        //印資料
+       function resultINFO(data, json) {
+            $(".result_info").empty();
+
+            Object.entries(data).forEach(([key, value]) => {
+                const AMOUNT_S = `<span class="amount_ss">${formatCurrency(Number(value))}</span><b class="WL_POINT"></b>`;
+                const AMOUNT_F = `<span class="amount_ff">${formatCurrency(Number(value))}</span><b class="WL_POINT"></b>`;
+
+                let contentHTML = value; // 預設 content
+
+                // 判斷 WALLET < DEDUCT，只對金額欄位生效
+
+                if (key === "WL_DEDUCT_AMOUNT_TITLE") {
+                    contentHTML = AMOUNT_S;
+                }
+                if (key === "WL_WALLET_AMOUNT_TITLE") {
+                    if (Number(json.WALLET_AMOUNT) < Number(json.DEDUCT_AMOUNT)) {
+                        contentHTML = AMOUNT_F;
+                    } else {
+                        contentHTML = AMOUNT_S;
+                    }
+                }
+
+                const htmlINFO = `
+                    <div class="item">
+                        <h1 class="title ${key}"></h1>
+                        <h1 class="content">${contentHTML}</h1>
+                    </div>`;
+                $(".result_info").append(htmlINFO);
+            });
+        }
+
+
+
+
+        function appendElement_Input(ele, name, value) {
+            var textHtml = '<input type="hidden" name="' + name + '"';
+            textHtml += ' value="' + value + '"';
+            textHtml += '/>';
+            $(ele).append(textHtml);
+        }
+
+        function check_submit() {
+            document.getElementById('form').submit();
+        }
+
+        //千元標註
+        function formatCurrency(number) {
+            if (isNaN(number)) return null;
+            return parseFloat(number).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        //密碼眼睛
+        let pageBaseUrl = '';
+        $('.togglePassword').on('click', function () {
+            const passwordField = $(this).siblings('input');
+            const isPasswordVisible = passwordField.attr('type') === 'text';
+            passwordField.attr('type', isPasswordVisible ? 'password' : 'text');
+
+            const newIconSrc = isPasswordVisible ? pageBaseUrl + 'https://wallet-page.kiwipin.com//assets/img/icon_eye_close.svg' : pageBaseUrl + 'https://wallet-page.kiwipin.com//assets/img/icon_eye_open.svg';
+            $(this).attr('src', newIconSrc);
+        });
+
+        // 驗證函數 - 是否空白
+            function validateEmptyField(selector, messageSelector, messageClass) {
+                const value = $(selector).val();
+                if (value === "") {
+                    $(messageSelector).hide();
+                    $(messageSelector + messageClass).show().parent().show(); // 顯示父層 .password_msg
+                    $(selector).addClass('input_error');
+                    return false;
+                } else {
+                    $(messageSelector).parent().hide();
+                    $(selector).removeClass('input_error');
+                    return true;
+                }
+            }
+
+            // 驗證函數 - 是否空白
+            function validateEmptyField(selector, messageSelector, messageClass) {
+                const value = $(selector).val();
+                if (value === "") {
+                    $(messageSelector).hide();
+                    $(messageSelector + messageClass).show().parent().show(); // 顯示父層 .password_msg
+                    $(selector).addClass('input_error');
+                    return false;
+                } else {
+                    $(messageSelector).parent().hide();
+                    $(selector).removeClass('input_error');
+                    return true;
+                }
+            }
+            // 驗證函數 - 是否符合格式(Number)
+            function validateNumberFormat(selector, messageSelector, messageClass) {
+                const value = $(selector).val();
+                const sixDigitPattern = /^\d{6}$/;
+                if (!sixDigitPattern.test(value)) {
+                    $(messageSelector).hide();
+                    $(messageSelector + messageClass).show().parent().show();
+                    $(selector).addClass('input_error');
+                    return false;
+                } else {
+                    $(messageSelector).parent().hide();
+                    $(selector).removeClass('input_error');
+                    return true;
+                }
+            }
+            $('#U_PAY_PASSWORD').on('input', function () {
+                    // 登入密碼的格式驗證
+                    if (validateEmptyField('#U_PAY_PASSWORD', '.pay_password_msg_text', ".WL_U_PAY_PASSWORD_MSG_EMPTY")) {
+                        validateNumberFormat('#U_PAY_PASSWORD', '.pay_password_msg_text', '.WL_U_PAY_PASSWORD_MSG_ERROR');
+                    }
+                });
+            function check_PASSWORD() {
+                    let isValid = true;
+                    //原交易密碼
+                    if (!validateEmptyField('#U_PAY_PASSWORD', '.pay_password_msg_text', ".WL_U_PAY_PASSWORD_MSG_EMPTY")) isValid = false;
+                    if (isValid && !validateNumberFormat('#U_PAY_PASSWORD', '.pay_password_msg_text', '.WL_U_PAY_PASSWORD_MSG_ERROR')) isValid = false;
+
+                    return isValid;
+                }
+            //提交
+           function check_submit() {
+                // 驗證交易密碼
+                if (!check_PASSWORD()) {
+                    return false; // 阻止表單送出
+                }
+
+                // 顯示 loading
+                $.LoadingOverlay("show", {
+                    image: "",  // 不用預設圖片
+                    custom: $("<div>", { class: "custom-spinner" })[0],
+                    background: "rgba(255,255,255,0.8)"
+                });
+
+                // 不需要 document.getElementById('form').submit();
+                return true; // 讓表單正常送出
+            }
+
+            //取消交易
+            function cancel_submit() {
+                // $("#U_CANCEL").val(U_CANCEL); 
+                
+                $("#form")[0].submit();  
+                return false;             
+            }
+    </script>
+
+    <script>
+        
+    </script>
+</body>
+
+</html>

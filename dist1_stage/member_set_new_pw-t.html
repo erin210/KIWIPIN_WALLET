@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<title>KIWI WALLET</title>
+</script>
+<link rel="icon" href="https://stage-wallet-page-t.kiwipin.com/favicon.png">
+<link rel="icon" href="https://stage-wallet-page-t.kiwipin.com/favicon.ico">
+<script src="https://stage-wallet-page-t.kiwipin.com/assets/js/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://stage-wallet-page-t.kiwipin.com/assets/css/reset.css">
+<link rel="stylesheet" href="https://stage-wallet-page-t.kiwipin.com/assets/css/bootstrap-grid.css">
+<link rel="stylesheet" href="https://stage-wallet-page-t.kiwipin.com/assets/css/select2.min.css" />
+<link rel="stylesheet" href="https://stage-wallet-page-t.kiwipin.com/assets/css/wallet.css">
+<script src="https://stage-wallet-page-t.kiwipin.com/assets/js/translate.js"></script>
+<script src="https://stage-wallet-page-t.kiwipin.com/assets/js/loadingoverlay.min.js"></script>
+<script>
+    function initFunction(jsonObj) {
+        renderInfo(jsonObj);
+    }
+</script>
+</head>
+
+<body class="walletBody">
+    <div id="apiWallet">
+        <div class="container">
+            <aside>
+                <div class="logo">
+                    <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/logo3.svg" alt="">
+                </div>
+                <div class="tabs tab_nnn">
+                    <div class="tab tab1">
+                        <a href="home">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_summery">
+                                <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_tab_summery.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_HOME">總覽</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab2">
+                        <a href="history">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_history">
+                                <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_tab_history.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_HISTORY">歷史交易</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab3">
+                        <a href="change_pay_password">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_lock">
+                                <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_tab_lock.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_CHANGE_PAY_PASSWORD">交易設定</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab4 active">
+                        <a href="change_password">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_member">
+                                <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_tab_member.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_CHANGE_PASSWORD">帳戶設定</span></h3>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="tab_container">
+                <div class="loginBar">
+                    <div id="langSelect" class="languageBox">
+                        <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_language.svg" alt="" srcset="">
+                        <span class="lang_text">語言</span>
+                        <ul id="langListItem" class="langListItem">
+                            <ul id="landList">
+                                <li class="active">
+                                    简中
+                                </li>
+                                <li>
+                                    English
+                                </li>
+                                <li>
+                                    日本語
+                                </li>
+                                <li>
+                                    한국어
+                                </li>
+                                <li>
+                                    Tiếng Việt
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="imgbox">
+                            <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_member.svg" alt="">
+                        </span>
+                        <span id="userID">abc12345@gmail.com</span>
+                        <a href="logout" id="logOutBTN" class="WL_LOGOUT">登出</a>
+                    </div>
+                </div>
+                <h4 class="WL_RESET_PWTITLE">變更帳戶密碼</h4>
+                <div class="scroll_bg">
+                    <!-- tab1 op-->
+                    <div id="tab1" class="tab_content">
+                        <form role="form" id="form" action="" method="post" target="_self" class="form-payment"
+                            onsubmit="return check_submit();">
+                            <div class="form_list reg">
+                                <ul>
+                                    <li class="check_code">
+                                        <span class="WL_RESET_U_PASSWORD_TITLE">原帳戶密碼</span>
+                                        <div class="code_PW">
+                                            <input class="input_original_visible WL_RESET_U_PASSWORD_HINT" type="password" name="U_PASSWORD"
+                                                id="U_PASSWORD" placeholder="請輸入原帳戶密碼">
+                                            <img class="togglePassword" src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_eye_close.svg" alt="eye">
+                                        </div>
+                                        <div class="wrong_msg password_msg" style="display:none"><i class="icon"><img
+                                                    src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_error.svg"></i><small
+                                                class="password_msg_text WL_RESET_U_PASSWORD_MSG_EMPTY">空白警告</small></div>
+                                        <span class="line"></span>
+                                    </li>
+                                    <li class="check_code">
+                                        <span class="WL_RESET_NEW_PASSWORD">新密碼</span>
+                                        <div class="code_PW">
+                                            <input class="input_visible WL_RESET_U_NEW_PASSWORD_HINT" type="password" name="U_NEW_PASSWORD" id="U_NEW_PASSWORD" placeholder="請輸入帳戶新密碼">
+                                            <img class="togglePassword" src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_eye_close.svg" alt="eye">
+                                        </div>
+                                        <div class="wrong_msg new_password_msg" style="display:none"><i
+                                                class="icon"><img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_error.svg"></i><small
+                                                class="new_password_msg_text WL_RESET_U_NEW_PASSWORD_MSG_EMPTY">空白警告</small><small class="new_password_msg_text WL_U_PASSWORD_MSG_ERROR">格式錯誤警告</small></div>
+                                    </li>
+                                    <li class="check_code">
+                                        <span class="WL_RESET_NEW_PASSWORD_CHECK">確認新密碼</span>
+                                        <div class="code_PW">
+                                            <input class="input_visible_check WL_RESET_U_NEW_PASSWORD_CHECK_HINT" type="password"
+                                                name="U_NEW_PASSWORD_CHECK" id="U_NEW_PASSWORD_CHECK"
+                                                placeholder="請再次輸入帳戶新密碼">
+                                            <img class="togglePassword" src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_eye_close.svg" alt="eye">
+                                        </div>
+                                        <div class="wrong_msg new_password_check_msg" style="display:none"><i
+                                                class="icon"><img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_error.svg"></i><small
+                                                class="new_password_check_msg_text WL_RESET_U_NEW_PASSWORD_CHECK_MSG_EMPTY">空白警告</small><small class="new_password_check_msg_text WL_U_PAY_PASSWORD_CHECK_MSG_ERROR">空白警告</small></div>
+                                    </li>
+                                </ul>
+                                <!--<a href="member_forget_pw.html" class="btn btn_blue">上一步</a>-->
+                                
+                            </div>
+                            <div class="form_bt">
+                                <a href="javascript:void(0)" class="btn btn_blue WL_RESET_BTN" onclick="return check_submit();">變更</a>
+                            </div>
+                            <input id="U_LANGUAGE" type="hidden" name="U_LANGUAGE" value="">
+                        </form>
+                    </div>
+                    <!-- tab1 ed-->
+                </div>
+            </div>
+            <a href="mailto:service@kiwipin.com.tw" class="email_info">service@kiwipin.com.tw</a>
+        </div>
+    </div>
+    <!--popup_1-->
+    <div id="popup" class="popup" style="display: none;">
+        <div class="container">
+            <div class="popup_left"></div>
+            <div class="popup_wrapper">
+                <div class="content">
+                    <img id="popup_icon" class="icon popup_icon popup_icon_success" src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_success.svg"
+                        alt="">
+                    <img id="popup_icon" class="icon popup_icon popup_icon_error" src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_error.svg"
+                        alt="">
+                    <h1 id="popup_title" class="title">跳窗標題</h1>
+                    <h1 id="popup_notice" class="notice">跳窗文字</h1>
+                </div>
+                <a id="popup_a" href="javascript:void(0)" onclick="$('#popup').hide();"
+                    class="confirm btn_pop_close btn btn_blue WL_CONFIRM">確認</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // $(function () {
+        //     $('base').attr('href', apiUrl);
+        // });
+
+        function renderInfo(json) {
+            
+            $('#userID').text(json.U_EMAIL);
+
+            if (json.MESSAGE_TYPE !== null && json.MESSAGE_TYPE !== undefined) {
+                $(".popup_icon").hide();
+                if (json.MESSAGE_TYPE == "S") {
+                    $(".popup_icon_success").show();
+                    $("#popup_title").attr('class', 'title WL_RESET_NEW_PASSWORD_TITLE_S');
+                    $("#popup_a").attr("href", "logout");
+                } else {
+                    $(".popup_icon_error").show();
+                    $("#popup_title").attr('class', 'title WL_VERIFY_TITLE_F');
+                    $("#popup_a").attr("href", "javascript:void(0)");
+                }
+                // $("#popup_notice").text(json.MESSAGE);
+                // $("#popup").show();
+                // document.addEventListener('touchmove', preventScroll, { passive: false });
+
+                 //解構parseSystemMessage
+                const { id: RESULT_ID, msg: RESULT_MSG } = parseSystemMessage(json.SYSTEM_MESSAGE) || {};
+                // console.log('systemMSG', systemMSG);
+                $("#popup_notice").html(`<b class="${RESULT_ID}"></b>${RESULT_MSG}`);
+                $("#popup").show();
+            }
+            
+
+            Object.keys(json).forEach(function (k) {
+                var eleName = '#' + k;
+                //console.log(eleName + ' - ' + json[k]);
+                if ($(eleName).length <= 0) {
+                    appendElement_Input('#form', k, json[k]);
+                } else {
+                    $(eleName).val(json[k]);
+                }
+            });
+            
+            initTranslation(json)//翻譯
+            $("#U_LANGUAGE").val(thisLang);
+
+        }
+        //整理 SYSTEM_MESSAGE-ID+系統字
+            function parseSystemMessage(systemMessage) {
+                if (!systemMessage) return null;
+
+                // 解析 [%ID%] 後面的字串
+                const matchId = systemMessage.match(/\[%(.+?)%\](.*)/);
+
+                if (!matchId) return null;
+
+                const RESULT_ID = matchId[1];
+                const RESULT_MSG = (matchId[2] || "").trim();
+
+                return { id: RESULT_ID, msg: RESULT_MSG };
+            }
+
+        //密碼眼睛
+        let pageBaseUrl = '';
+        $('.togglePassword').on('click', function () {
+            const passwordField = $(this).siblings('input');
+            const isPasswordVisible = passwordField.attr('type') === 'text';
+            passwordField.attr('type', isPasswordVisible ? 'password' : 'text');
+
+            const newIconSrc = isPasswordVisible ? pageBaseUrl + 'https://stage-wallet-page-t.kiwipin.com/assets/img/icon_eye_close.svg' : pageBaseUrl + 'https://stage-wallet-page-t.kiwipin.com/assets/img/icon_eye_open.svg';
+            $(this).attr('src', newIconSrc);
+        });
+
+
+        function appendElement_Input(ele, name, value) {
+            var textHtml = '<input type="hidden" name="' + name + '"';
+            textHtml += ' value="' + value + '"';
+            textHtml += '/>';
+            $(ele).append(textHtml);
+        }
+
+
+        // 監聽驗證 op====================
+        // 驗證函數 - 是否空白
+        function validateEmptyField(selector, messageSelector, messageClass) {
+            const value = $(selector).val();
+            if (value === "") {
+                $(messageSelector).hide();
+                $(messageSelector + messageClass).show().parent().show(); // 顯示父層 .password_msg
+                $(selector).addClass('input_error');
+                return false;
+            } else {
+                $(messageSelector).parent().hide();
+                $(selector).removeClass('input_error');
+                return true;
+            }
+        }
+
+        // 驗證函數 - 是否符合格式(Password)
+        function validatePasswordFormat(selector, messageSelector, messageClass) {
+            const value = $(selector).val();
+            // 密碼須為英數混合8字元以上，可接受的特殊字元~!@#$%^&*()_-+
+            const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d~`!@#$%^&*()_\-+]{8,}$/;
+            if (!passwordPattern.test(value)) {
+                $(messageSelector).hide();
+                $(messageSelector + messageClass).show().parent().show();
+                $(selector).addClass('input_error');
+                return false;
+            } else {
+                $(messageSelector).parent().hide();
+                $(selector).removeClass('input_error');
+                return true;
+            }
+        }
+
+        // 驗證函數 - 確認新密碼是否跟新密碼相同
+        function validatePasswordMatch(selector1, selector2, messageSelector, messageClass) {
+                const value1 = $(selector1).val();
+                const value2 = $(selector2).val();
+                if (value1 !== value2) {
+                    $(messageSelector).hide();
+                    $(messageSelector + messageClass).show().parent().show();
+                    $(selector2).addClass('input_error');
+                    return false;
+                } else {
+                    $(messageSelector).parent().hide();
+                    $(selector2).removeClass('input_error');
+                    return true;
+                }
+            }
+
+        // 即時監聽驗證
+        // 原密碼
+        $('#U_PASSWORD').on('input', function () {
+            validateEmptyField('#U_PASSWORD', '.password_msg_text', ".WL_RESET_U_PASSWORD_MSG_EMPTY");
+        });
+        // 新密碼
+        $('#U_NEW_PASSWORD').on('input', function () {
+            // 新密碼的格式驗證
+            if (validateEmptyField('#U_NEW_PASSWORD', '.new_password_msg_text', ".WL_RESET_U_NEW_PASSWORD_MSG_EMPTY")) {
+                validatePasswordFormat('#U_NEW_PASSWORD', '.new_password_msg_text', '.WL_U_PASSWORD_MSG_ERROR');
+            }
+        });
+
+        // 確認新密碼
+        $('#U_NEW_PASSWORD_CHECK').on('input', function () {
+            if (validateEmptyField('#U_NEW_PASSWORD_CHECK', '.new_password_check_msg_text', ".WL_RESET_U_NEW_PASSWORD_CHECK_MSG_EMPTY")) {
+                validatePasswordMatch('#U_NEW_PASSWORD', '#U_NEW_PASSWORD_CHECK', '.new_password_check_msg_text','.WL_U_PAY_PASSWORD_CHECK_MSG_ERROR');
+            }
+        });
+
+        // 監聽驗證 ed====================
+
+        // 提交的驗證
+        function check_PASSWORD() {
+            let isValid = true;
+            //原帳戶密碼
+            if (!validateEmptyField('#U_PASSWORD', '.password_msg_text', ".WL_RESET_U_PASSWORD_MSG_EMPTY")) isValid = false;
+            
+            //新帳戶密碼
+            if (!validateEmptyField('#U_NEW_PASSWORD', '.new_password_msg_text', ".WL_RESET_U_NEW_PASSWORD_MSG_EMPTY")) isValid = false;
+            if (isValid && !validatePasswordFormat('#U_NEW_PASSWORD', '.new_password_msg_text','.WL_U_PASSWORD_MSG_ERROR')) isValid = false;
+            //密碼確認
+            if (!validateEmptyField('#U_NEW_PASSWORD_CHECK', '.new_password_check_msg_text', ".WL_RESET_U_NEW_PASSWORD_CHECK_MSG_EMPTY")) isValid = false;
+            if (isValid && !validatePasswordMatch('#U_NEW_PASSWORD', '#U_NEW_PASSWORD_CHECK', '.new_password_check_msg_text','.WL_U_PAY_PASSWORD_CHECK_MSG_ERROR')) isValid = false;
+
+            return isValid;
+        }
+
+        function check_submit() {
+            if (!check_PASSWORD()) {
+                return false;
+            }
+            //鎖住畫面
+            $.LoadingOverlay("show", {
+                image: "",  // 不用預設圖片
+                custom: $("<div>", { class: "custom-spinner" })[0],
+                background: "rgba(255,255,255,0.8)"
+            });
+            document.getElementById('form').submit();
+            //return true;
+        }
+        function preventScroll(e) {
+            e.preventDefault(); // 禁滾動
+        }
+
+
+    </script>
+
+    <script>
+        
+        // 
+        // 
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('layout/head') %>
+</head>
+
+<body class="walletBody">
+    <div id="apiWallet">
+        <div class="container">
+            <aside>
+                <div class="logo">
+                    <img src="<%- wallet %>/assets/img/logo3.svg" alt="">
+                </div>
+                <div class="tabs tab_nnn">
+                    <div class="tab tab1 active">
+                        <a href="home">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_summery">
+                                <img src="<%- wallet %>/assets/img/icon_tab_summery.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_HOME">總覽</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab2">
+                        <a href="history">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_history">
+                                <img src="<%- wallet %>/assets/img/icon_tab_history.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_HISTORY">歷史交易</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab3">
+                        <a href="change_pay_password">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_lock">
+                                <img src="<%- wallet %>/assets/img/icon_tab_lock.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_CHANGE_PAY_PASSWORD">交易設定</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab4">
+                        <a href="change_password">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_member">
+                                <img src="<%- wallet %>/assets/img/icon_tab_member.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_CHANGE_PASSWORD">帳戶設定</span></h3>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="tab_container">
+                <div class="loginBar">
+                    <div id="langSelect" class="languageBox">
+                        <img src="<%- wallet %>/assets/img/icon_language.svg" alt="" srcset="">
+                        <span class="lang_text">語言</span>
+                        <ul id="langListItem" class="langListItem">
+                            <ul id="landList">
+                                <li class="active">
+                                    简中
+                                </li>
+                                <li>
+                                    English
+                                </li>
+                                <li>
+                                    日本語
+                                </li>
+                                <li>
+                                    한국어
+                                </li>
+                                <li>
+                                    Tiếng Việt
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="imgbox">
+                            <img src="<%- wallet %>/assets/img/icon_member.svg" alt="">
+                        </span>
+                        <span id="userID">abc12345@gmail.com</span>
+                        <a href="logout" id="logOutBTN" class="WL_LOGOUT">登出</a>
+                    </div>
+                </div>
+
+                <div class="scroll_bg">
+                    <!-- tab1 op-->
+                    <div id="tab1" class="tab_content">
+                        <div class="form-payment" onsubmit="return check_submit1();">
+                            <div class="form_list reg">
+                                <h4 class="WL_SUMMARY">錢包總覽</h4>
+                            </div>
+                            <div class="summery_top">
+                                <div class="point_info">
+                                    <a id="confirm" href="purchase" class="btn btn_blue confirm">
+                                        <span class="imgbox">
+                                            <img src="<%- wallet %>/assets/img/icon_add.svg" alt="">
+                                        </span>
+                                        <b class="WL_TAB_TOPUP">儲值</b>
+                                    </a>
+                                    <p class="point_label">
+                                        <span class="imgbox">
+                                            <img src="<%- wallet %>/assets/img/icon_light.svg" alt="">
+                                        </span>
+                                        <b class="WL_BALANCE">錢包餘額</b>
+                                    </p>
+                                    <p>
+                                        |
+                                    </p>
+                                    <p class="point_amount"><span id="U_KIWI_POINT"></span><b class="WL_POINT">點</b></p>
+                                </div>
+                            </div>
+                            <div class="form_list reg">
+                                <h4></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- tab1 ed-->
+                </div>
+            </div>
+            <a href="mailto:service@kiwipin.com.tw" class="email_info">service@kiwipin.com.tw</a>
+        </div>
+    </div>
+
+    <script>
+        // $(function () {
+        //     $('base').attr('href', apiUrl);
+        // });
+
+        //從result回來，對照參數
+        var params = new URLSearchParams(window.location.search);
+        var activeTab = params.get('activeTab');
+
+
+        if (!activeTab == null) {
+            switchTab(activeTab);
+        }
+
+        function renderInfo(json) {
+            
+
+            var amountNUM = Number(json.U_KIWI_POINT);
+            $('#f_data').val(json.data);
+            $('#b_data').val(json.data);
+            $('.point_amount span').html(formatCurrency(amountNUM));
+            $('#buy_pin_amount').text(json.AMOUNT);
+
+
+
+            Object.keys(json).forEach(function (k) {
+                var eleName = '#' + k;
+                // console.log(eleName + ' - ' + json[k]);
+                if ($(eleName).length <= 0) {
+                    appendElement_Input('#form', k, json[k]);
+                } else {
+                    $(eleName).val(json[k]);
+                }
+            });
+            //千元標註
+            function formatCurrency(number) {
+                // 確保 number 是一個整數
+                if (!Number.isInteger(number)) return null;
+
+                // 將整數轉成字串，並利用正規表達式添加逗號
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            $('#userID').text(json.U_EMAIL);
+            
+            initTranslation(json)//翻譯
+
+        }
+
+
+        //手機點擊語言
+        // $('#langSelect').on('click',function(){
+        //     console.log("open");
+        //     $('#langListItem').hide().slideToggle(200);
+        // });
+        //密碼眼睛
+        let pageBaseUrl = '';
+        $('#togglePassword').on('click', function () {
+            const passwordField = $('#U_PINCODE');
+            const isPasswordVisible = passwordField.attr('type') === 'text';
+            passwordField.attr('type', isPasswordVisible ? 'password' : 'text');
+
+            const newIconSrc = isPasswordVisible ? pageBaseUrl + '<%- wallet %>/assets/img/icon_eye_close.svg' : pageBaseUrl + '<%- wallet %>/assets/img/icon_eye_open.svg';
+            $(this).attr('src', newIconSrc);
+        });
+
+        function switchTab(tab) {
+            $(".tab_content").hide();
+            $("#" + tab).fadeIn();
+            $("div.tabs div").removeClass("active");
+            $("." + tab).addClass("active");
+        }
+
+
+        function appendElement_Input(ele, name, value) {
+            var textHtml = '<input type="hidden" name="' + name + '"';
+            textHtml += ' value="' + value + '"';
+            textHtml += '/>';
+            $(ele).append(textHtml);
+        }
+
+
+    </script>
+
+    <script>
+        initFunction({ "Tpye": "HOME", 
+                "U_EMAIL": "yourweb210@gmail.com", "U_PASSWORD": "erin1234", "ReturnURL": "home", "U_KIWI_POINT": "2500", "LanguageList": { "en_US": "English", "zh_TW": "\u4e2d\u6587" }, "StringID": {
+            "en_US": {
+                "WL_TAB_LOGIN": "Login",
+                "WL_TAB_REGISTER": "Sign Up",
+                "WL_TAB_FORGET_PW": "Reset Password",
+                "WL_BACK_LOGIN": "Back to Login",
+                "WL_CONFIRM": "Confirm",
+                "WL_LOGIN_REMIND": "For your security, KIWI WALLET requires login. Please sign in to access services.",
+                "WL_U_EMAIL_TITLE": "Email",
+                "WL_U_EMAIL_HINT": "Enter Email",
+                "WL_U_EMAIL_MSG_EMPTY": "Email required",
+                "WL_MSG_ERROR": "Enter a valid Email",
+                "WL_U_PASSWORD_TITLE": "Password",
+                "WL_U_PASSWORD_HINT": "Enter Password",
+                "WL_U_PASSWORD_MSG_EMPTY": "Password required",
+                "WL_U_PASSWORD_MSG_ERROR": "Password must be 8+ chars, letters & numbers",
+                "WL_FORGET_PW": "Forgot Password?",
+                "WL_LOGIN_NOTICE": "No account?",
+                "WL_BTN_GO_REG": "Register",
+                "WL_FORGET_PW_REMIND": "Enter your registered email to receive a code. Use the code to reset password.",
+                "WL_SEND_VERIFY_CODE_BTN": "Send Code",
+                "WL_SEND_VERIFY_CODE_ING": "Sending...",
+                "WL_SEND_VERIFY_CODE_COUNT": "Sent",
+                "WL_SEND_VERIFY_CODE_RESEND": "Resend",
+                "WL_VERIFY_TITLE_S": "Code Sent",
+                "WL_VERIFY_INFO_S": "Code sent to:",
+                "WL_VERIFY_TITLE_F": "Error",
+                "WL_VERIFY_INFO_F": "Failed: Email already in use!",
+                "WL_SUBMIT_TITLE_F": "Error",
+                "WL_SUBMIT_INFO_F": "Invalid or expired code!",
+                "WL_U_VERIFY_CODE_TITLE": "Verification Code",
+                "WL_U_VERIFY_CODE_HINT": "Enter Code",
+                "WL_U_VERIFY_CODE_MSG_EMPTY": "Code required",
+                "WL_FORGET_PW_SUBMIT_TITLE_S": "Password Changed!",
+                "WL_FORGET_PW_SUBMIT_INFO_S": "New password sent to your email. Please log in again.",
+                "WL_U_PAY_PASSWORD_TITLE": "Pay PIN",
+                "WL_U_PAY_PASSWORD_HINT": "Enter Wallet PIN",
+                "WL_U_PAY_PASSWORD_MSG_EMPTY": "PIN required",
+                "WL_U_PAY_PASSWORD_MSG_ERROR": "Enter 6 digits",
+                "WL_U_PAY_PASSWORD_CHECK_TITLE": "Confirm PIN",
+                "WL_U_PAY_PASSWORD_CHECK_HINT": "Re-enter Wallet PIN",
+                "WL_U_PAY_PASSWORD_CHECK_MSG_EMPTY": "Confirm PIN required",
+                "WL_U_PAY_PASSWORD_CHECK_MSG_ERROR": "PINs do not match",
+                "WL_AGREE_LABEL": "I agree to",
+                "WL_AGREE_LABEL_LINK1": "Terms of Service",
+                "WL_AGREE_LABEL_LINK2": "Privacy Policy",
+                "WL_AGREE_HINT": "Please agree",
+                "WL_REG_SUBMIT_TITLE_S": "Sign Up Success!",
+                "WL_REG_SUBMIT_INFO_S": "Registered successfully. Please log in.",
+                "WL_TAB_HOME": "Overview",
+                "WL_TAB_HISTORY": "History",
+                "WL_TAB_CHANGE_PAY_PASSWORD": "Payment Settings",
+                "WL_TAB_CHANGE_PASSWORD": "Account Settings",
+                "WL_TAB_TOPUP": "Top Up",
+                "WL_SUMMARY": "Wallet Overview",
+                "WL_BALANCE": "Balance",
+                "WL_POINT": "Points",
+                "WL_HISTORY_DATE": "Date",
+                "WL_HISTORY_CID_NAME": "Service",
+                "WL_HISTORY_PRODUCT_NAME": "Product",
+                "WL_HISTORY_COID": "Order ID",
+                "WL_HISTORY_AMOUNT_ADD_USE": "Points Used",
+                "WL_HISTORY_AMOUNT_AFTER": "Remaining Points",
+                "WL_RESET_PAY_PW": "Change Pay PIN",
+                "WL_RESET_U_PAY_PASSWORD_TITLE": "Old Pay PIN",
+                "WL_RESET_U_PAY_PASSWORD_HINT": "Enter old PIN",
+                "WL_RESET_U_NEW_PAY_PASSWORD_HINT": "Enter new PIN",
+                "WL_RESET_U_NEW_PAY_PASSWORD_MSG_EMPTY": "New PIN required",
+                "WL_RESET_U_NEW_PAY_PASSWORD_CHECK_HINT": "Re-enter new PIN",
+                "WL_RESET_U_NEW_PAY_PASSWORD_CHECK_MSG_EMPTY": "Confirm new PIN required",
+                "WL_RESET_PWTITLE": "Change Password",
+                "WL_RESET_U_PASSWORD_TITLE": "Old Password",
+                "WL_RESET_U_PASSWORD_HINT": "Enter old password",
+                "WL_RESET_U_NEW_PASSWORD_HINT": "Enter new password",
+                "WL_RESET_U_NEW_PASSWORD_MSG_EMPTY": "New password required",
+                "WL_RESET_U_NEW_PASSWORD_CHECK_HINT": "Re-enter new password",
+                "WL_RESET_U_NEW_PASSWORD_CHECK_MSG_EMPTY": "Confirm new password required",
+                "WL_RESET_NEW_PASSWORD": "New Password",
+                "WL_RESET_NEW_PASSWORD_CHECK": "Confirm Password",
+                "WL_RESET_BTN": "Change",
+                "WL_WALLET_TOPUP": "Top Up Wallet",
+                "WL_BACK_BTN": "Back"
+            },
+            "zh_TW": {
+                "WL_TAB_LOGIN": "登入",
+                "WL_TAB_REGISTER": "註冊",
+                "WL_TAB_FORGET_PW": "重設密碼",
+                "WL_BACK_LOGIN": "返回登入",
+                "WL_CONFIRM": "確認",
+                "WL_LOGIN_REMIND": "為保障您的權益，KIWI WALLET 需要登入帳號才能使用，請您登入會員，以享有便利的服務",
+                "WL_U_EMAIL_TITLE": "會員信箱",
+                "WL_U_EMAIL_HINT": "請輸入Email",
+                "WL_U_EMAIL_MSG_EMPTY": "請填寫Email",
+                "WL_MSG_ERROR": "請輸入有效的 Email 格式",
+                "WL_U_PASSWORD_TITLE": "登入密碼",
+                "WL_U_PASSWORD_HINT": "請輸入會員密碼",
+                "WL_U_PASSWORD_MSG_EMPTY": "請填寫登入密碼",
+                "WL_U_PASSWORD_MSG_ERROR": "密碼須為英數混合8字元以上",
+                "WL_FORGET_PW": "忘記密碼？",
+                "WL_LOGIN_NOTICE": "還沒有帳號？",
+                "WL_BTN_GO_REG": "去註冊",
+                "WL_FORGET_PW_REMIND": "請輸入已註冊的信箱，系統會發送驗證碼。再請輸入正確的驗證碼，以便重設密碼",
+                "WL_SEND_VERIFY_CODE_BTN": "發送驗證碼",
+                "WL_SEND_VERIFY_CODE_ING": "發送中...",
+                "WL_SEND_VERIFY_CODE_COUNT": "已發送",
+                "WL_SEND_VERIFY_CODE_RESEND": "重新發送",
+                "WL_VERIFY_TITLE_S": "驗證碼發送成功",
+                "WL_VERIFY_INFO_S": "驗證碼已發送到：",
+                "WL_VERIFY_TITLE_F": "發生錯誤了",
+                "WL_VERIFY_INFO_F": "驗證碼發送失敗:此 EMail 已經使用!",
+                "WL_SUBMIT_TITLE_F": "發生錯誤了",
+                "WL_SUBMIT_INFO_F": "驗證碼錯誤或已失效!",
+                "WL_U_VERIFY_CODE_TITLE": "驗證碼",
+                "WL_U_VERIFY_CODE_HINT": "請輸入驗證碼",
+                "WL_U_VERIFY_CODE_MSG_EMPTY": "請填寫驗證碼",
+                "WL_FORGET_PW_SUBMIT_TITLE_S": "修改密碼成功！",
+                "WL_FORGET_PW_SUBMIT_INFO_S": "新密碼已發送至Email，請牢記您的密碼，並重新登入",
+                "WL_U_PAY_PASSWORD_TITLE": "交易密碼",
+                "WL_U_PAY_PASSWORD_HINT": "請輸入錢包交易密碼",
+                "WL_U_PAY_PASSWORD_MSG_EMPTY": "請填寫交易密碼",
+                "WL_U_PAY_PASSWORD_MSG_ERROR": "請輸入六位數字",
+                "WL_U_PAY_PASSWORD_CHECK_TITLE": "確認交易密碼",
+                "WL_U_PAY_PASSWORD_CHECK_HINT": "請再次輸入錢包交易密碼",
+                "WL_U_PAY_PASSWORD_CHECK_MSG_EMPTY": "請再次填寫交易密碼",
+                "WL_U_PAY_PASSWORD_CHECK_MSG_ERROR": "二次輸入新密碼不一致",
+                "WL_AGREE_LABEL": "閱讀並同意",
+                "WL_AGREE_LABEL_LINK1": "會員服務條款",
+                "WL_AGREE_LABEL_LINK2": "隱私權政策",
+                "WL_AGREE_HINT": "請勾選同意",
+                "WL_REG_SUBMIT_TITLE_S": "註冊成功！",
+                "WL_REG_SUBMIT_INFO_S": "註冊成功，請重新登入",
+                "WL_TAB_HOME": "總覽",
+                "WL_TAB_HISTORY": "歷史交易",
+                "WL_TAB_CHANGE_PAY_PASSWORD": "交易設定",
+                "WL_TAB_CHANGE_PASSWORD": "帳戶設定",
+                "WL_TAB_TOPUP": "儲值",
+                "WL_SUMMARY": "錢包總覽",
+                "WL_BALANCE": "錢包餘額",
+                "WL_POINT": "點",
+                "WL_HISTORY_DATE": "交易日期",
+                "WL_HISTORY_CID_NAME": "服務名稱",
+                "WL_HISTORY_PRODUCT_NAME": "商品名稱",
+                "WL_HISTORY_COID": "訂單編號",
+                "WL_HISTORY_AMOUNT_ADD_USE": "交易點數",
+                "WL_HISTORY_AMOUNT_AFTER": "剩餘點數",
+                "WL_RESET_PAY_PW": "變更交易密碼",
+                "WL_RESET_U_PAY_PASSWORD_TITLE": "原交易密碼",
+                "WL_RESET_U_PAY_PASSWORD_HINT": "請輸入原交易密碼",
+                "WL_RESET_U_NEW_PAY_PASSWORD_HINT": "請輸入交易新密碼",
+                "WL_RESET_U_NEW_PAY_PASSWORD_MSG_EMPTY": "請填寫新交易密碼",
+                "WL_RESET_U_NEW_PAY_PASSWORD_CHECK_HINT": "請再次輸入交易新密碼",
+                "WL_RESET_U_NEW_PAY_PASSWORD_CHECK_MSG_EMPTY": "請再次填寫新交易密碼",
+                "WL_RESET_PWTITLE": "變更帳戶密碼",
+                "WL_RESET_U_PASSWORD_TITLE": "原帳戶密碼",
+                "WL_RESET_U_PASSWORD_HINT": "請輸入原帳戶密碼",
+                "WL_RESET_U_NEW_PASSWORD_HINT": "請輸入帳戶新密碼",
+                "WL_RESET_U_NEW_PASSWORD_MSG_EMPTY": "請填寫新帳戶密碼",
+                "WL_RESET_U_NEW_PASSWORD_CHECK_HINT": "請再次輸入帳戶新密碼",
+                "WL_RESET_U_NEW_PASSWORD_CHECK_MSG_EMPTY": "請再次填寫新帳戶新密碼",
+                "WL_RESET_NEW_PASSWORD": "新密碼",
+                "WL_RESET_NEW_PASSWORD_CHECK": "確認新密碼",
+                "WL_RESET_BTN": "變更",
+                "WL_WALLET_TOPUP": "儲值錢包",
+                "WL_BACK_BTN": "返回"
+            }
+
+         }});
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<title>KIWI WALLET</title>
+</script>
+<link rel="icon" href="https://wallet-page-t.kiwipin.com//favicon.png">
+<link rel="icon" href="https://wallet-page-t.kiwipin.com//favicon.ico">
+<script src="https://wallet-page-t.kiwipin.com//assets/js/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://wallet-page-t.kiwipin.com//assets/css/reset.css">
+<link rel="stylesheet" href="https://wallet-page-t.kiwipin.com//assets/css/bootstrap-grid.css">
+<link rel="stylesheet" href="https://wallet-page-t.kiwipin.com//assets/css/select2.min.css" />
+<link rel="stylesheet" href="https://wallet-page-t.kiwipin.com//assets/css/wallet.css">
+<script src="https://wallet-page-t.kiwipin.com//assets/js/translate.js"></script>
+<script src="https://wallet-page-t.kiwipin.com//assets/js/loadingoverlay.min.js"></script>
+<script>
+    function initFunction(jsonObj) {
+        renderInfo(jsonObj);
+    }
+</script>
+</head>
+
+<body class="walletBody">
+    <div id="apiWallet">
+        <div class="container">
+            <aside>
+                <div class="logo">
+                    <img src="https://wallet-page-t.kiwipin.com//assets/img/logo3.svg" alt="">
+                </div>
+                <div class="tabs tab_nnn">
+                    <div class="tab tab1">
+                        <a href="home">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_summery">
+                                <img src="https://wallet-page-t.kiwipin.com//assets/img/icon_tab_summery.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_HOME">總覽</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab2 active">
+                        <a href="history">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_history">
+                                <img src="https://wallet-page-t.kiwipin.com//assets/img/icon_tab_history.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_HISTORY">歷史交易</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab3">
+                        <a href="change_pay_password">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_lock">
+                                <img src="https://wallet-page-t.kiwipin.com//assets/img/icon_tab_lock.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_CHANGE_PAY_PASSWORD">交易設定</span></h3>
+                        </a>
+                    </div>
+                    <div class="tab tab4">
+                        <a href="change_password">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_member">
+                                <img src="https://wallet-page-t.kiwipin.com//assets/img/icon_tab_member.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_CHANGE_PASSWORD">帳戶設定</span></h3>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+            <div class="tab_container">
+                <div class="loginBar">
+                    <div id="langSelect" class="languageBox">
+                        <img src="https://wallet-page-t.kiwipin.com//assets/img/icon_language.svg" alt="" srcset="">
+                        <span class="lang_text">語言</span>
+                        <ul id="langListItem" class="langListItem">
+                            <ul id="landList">
+                                <li class="active">
+                                    简中
+                                </li>
+                                <li>
+                                    English
+                                </li>
+                                <li>
+                                    日本語
+                                </li>
+                                <li>
+                                    한국어
+                                </li>
+                                <li>
+                                    Tiếng Việt
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="imgbox">
+                            <img src="https://wallet-page-t.kiwipin.com//assets/img/icon_member.svg" alt="">
+                        </span>
+                        <span id="userID"></span>
+                        <a href="logout" id="logOutBTN" class="WL_LOGOUT">登出</a>
+                    </div>
+                </div>
+                <h4 class="WL_TAB_HISTORY">歷史交易</h4>
+                <div class="scroll_bg hisory">
+                    <!-- tab1 op-->
+                    <div id="tab1" class="tab_content">
+                        <div class="form-payment" onsubmit="return check_submit1();">
+                            <div class="form_list reg">
+                            </div>
+                            <div class="history_list">
+                                <div class="list_PC">
+                                    <table id="historyTable">
+                                    </table>
+                                    <div class="dataEmpty" style="display: none;">
+                                        <img src="https://wallet-page-t.kiwipin.com//assets/img/no_data.svg" alt="">
+                                        <b class="WL_HISTORY_INFO_EMPTY"></b>
+                                    </div>
+                                </div>
+                                <div class="list_M" id="listArea">
+                                    <div class="dataEmpty" style="display: none;">
+                                        <img src="https://wallet-page-t.kiwipin.com//assets/img/no_data.svg" alt="">
+                                        <b class="WL_HISTORY_INFO_EMPTY"></b>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <!-- tab1 ed-->
+
+                </div>
+                <div id="pagination" class="pagination">
+                    <button type="button" id="prev" class="prev">
+                        <img id="prev_img" src="https://wallet-page-t.kiwipin.com//assets/img/icon_prev_arrow.svg" alt="">
+                    </button>
+                    <div id="page" class="page"></div>
+                    <button type="button" id="next" class="next">
+                        <img id="next_img" src="https://wallet-page-t.kiwipin.com//assets/img/icon_next_arrow.svg" alt="">
+                    </button>
+                </div>
+
+
+            </div>
+            <a href="mailto:service@kiwipin.com.tw" class="email_info">service@kiwipin.com.tw</a>
+        </div>
+    </div>
+
+    <script>
+        // $(function () {
+        //     $('base').attr('href', apiUrl);
+        // });
+        // if (!activeTab == null) {
+        //         switchTab(activeTab);
+        //     }
+
+
+        function renderInfo(json) {
+            $('#userID').text(json.U_EMAIL);
+
+            const historyDATA = json.WALLET_HISTORY; // 這裡就是一頁的資料
+            // console.log("收到的資料：", historyDATA);
+
+            // 排序-新到舊
+            historyDATA.sort((a, b) => new Date(b.CreateTime_at) - new Date(a.CreateTime_at));
+
+            // 清空表格跟列表
+            $('#historyTable').empty();
+            $('#listArea').empty();
+
+            // === PC table ===
+            const tableTH = `<tr class="list_th">
+                        <th class="acc_date WL_HISTORY_DATE">交易日期</th>
+                        <th class="acc_name WL_HISTORY_CID_NAME">服務名稱</th>
+                        <th class="acc_product WL_HISTORY_PRODUCT_NAME">商品名稱</th>
+                        <th class="acc_order WL_HISTORY_COID">訂單編號</th>
+                        <th class="acc_point WL_HISTORY_AMOUNT_ADD_USE">交易點數</th>
+                        <th class="acc_balance WL_HISTORY_AMOUNT_AFTER">剩餘點數</th>
+                    </tr>`;
+            $('#historyTable').append(tableTH);
+
+            historyDATA.forEach(item => {
+                const dateFormat = formatTime(item.CreateTime_at);
+                const amountHTML = formatAmount(item.AMOUNT_ADD_USE);
+
+            
+                const tableHTML = `<tr>
+                            <td class="acc_date">${dateFormat}</td>
+                            <td class="acc_name">${item.CID_NAME}</td>
+                            <td class="acc_product">${item.PRODUCT_NAME}</td>
+                            <td class="acc_order">${item.COID}</td>
+                            <td class="acc_point">${amountHTML}</td>
+                            <td class="acc_balance">${item.AMOUNT_AFTER}</td>
+                        </tr>`;
+                $('#historyTable').append(tableHTML);
+            });
+
+            // === M list ===
+            const groupedData = groupByYearMonth(historyDATA);
+            if (Object.keys(groupedData).length === 0) {
+                $('.dataEmpty').show();
+                $('.pagination').hide();
+            } else {
+                $('.dataEmpty').hide();
+                $('.pagination').show();
+            }
+
+            Object.keys(groupedData).forEach(key => {
+                const listTitle_HTML = `
+                            <h5>${key}</h5>
+                            <ul id="listDATA${key}"></ul>`;
+                $('#listArea').append(listTitle_HTML);
+
+                groupedData[key].forEach(item => {
+                    const amountHTML = formatAmount(item.AMOUNT_ADD_USE);
+                    const dateHTML = item.CreateTime_at.substring(5);
+
+                    const listINFO_HTML = `<li>
+                                <div class="list_head">
+                                    <div>
+                                        <span class="list_text_left acc_name">${item.CID_NAME}</span>
+                                        <span class="list_text_right">
+                                            <i class="imgbox">
+                                                <img src="https://wallet-page-t.kiwipin.com//assets/img/icon_dropdown.svg" alt="">
+                                            </i>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="list_text_left acc_date">${dateHTML}</span>
+                                        <span class="list_text_right acc_point">${amountHTML}</span>
+                                    </div>
+                                </div>
+                                <div class="list_content">
+                                    <div>
+                                        <span class="list_text_left WL_HISTORY_COID">訂單編號</span>
+                                        <span class="list_text_right">${item.COID}</span>
+                                    </div>
+                                    <div>
+                                        <span class="list_text_left WL_HISTORY_PRODUCT_NAME">商品名稱</span>
+                                        <span class="list_text_right acc_product">${item.PRODUCT_NAME}</span>
+                                    </div>
+                                    <div>
+                                        <span class="list_text_left WL_HISTORY_AMOUNT_AFTER">剩餘點數</span>
+                                        <span class="list_text_right acc_balance">${item.AMOUNT_AFTER}</span>
+                                    </div>
+                                </div>
+                            </li>`;
+                    $('#listDATA' + key).append(listINFO_HTML);
+                });
+            });
+
+            $('.list_head').on('click', function () {
+                $(this).find('.imgbox').toggleClass('rotate');
+                $(this).siblings('.list_content').toggleClass('show');
+            });
+
+             //判斷-正數/負數
+            function formatAmount(amount) {
+                if (amount.charAt(0) !== '-') {
+                    return `<i class="icon account_add"><img src="https://wallet-page-t.kiwipin.com//assets/img/icon_account_add.svg" alt=""></i><b>${amount}</b>`;
+                } else {
+                    const positive = amount.replace('-', ''); // 去掉負號
+                    return `<i class="icon account_deduct"><img src="https://wallet-page-t.kiwipin.com//assets/img/icon_account_deduct.svg" alt=""></i><b>${positive}</b>`;
+                }
+            }
+
+            //日期格式
+            function groupByYearMonth(data) {
+                const grouped = {};
+                data.forEach(item => {
+                    const [year, month] = item.CreateDate_at.split('-');
+                    const key = `${year}-${month}`;
+                    if (!grouped[key]) grouped[key] = [];
+                    grouped[key].push(item);
+                });
+                return grouped;
+            }
+            //日期＋時間 格式
+            function formatTime(tt) {
+                const [datePart, timePart] = tt.split(" ");
+                return `${datePart} <span>${timePart}</span>`;
+            }
+
+            // 顯示頁碼
+            renderPagination(parseInt(json.PAGE_COUNT), parseInt(json.PAGE_SELECT));
+            
+            initTranslation(json)//翻譯
+        }
+
+        // ===讀取當頁內容===
+        function loadPage(page) {
+            // console.log("頁數", page);
+            
+            const url = `https://wallet.kiwipin.com/history?page=${page}&json=1`;
+
+           fetch(url).then(res => {
+                if (!res.ok) throw new Error(res.status);
+                return res.text();
+            })
+            .then(html => {
+                //抓JSON格式
+                const $temp = $("<div>").html(html);
+                const scriptText = $temp.find("script").text();
+                const jsonText = scriptText.match(/initFunction\(([\s\S]*)\);/)[1];
+                const data = JSON.parse(jsonText);
+
+                $('.history_list').fadeOut(200, function () {
+                    // 重新解析資料
+                    renderInfo(data); 
+                    $(this).fadeIn(200);
+                });
+
+                // 滾動效果
+                $('.scroll_bg').animate({ scrollTop: 0 }, 300);
+                $('.container').animate({ scrollTop: 0 }, 300);
+
+            })
+            .catch(err => {
+                if (xhr.status === 401) {
+                    alert("請先登入！");
+                    window.location.href = "login";
+                } else {
+                    alert("資料載入失敗，請稍後再試");
+                } 
+            });
+        }
+
+        //計算頁碼
+        function renderPagination(PAGE_COUNT, PAGE_SELECT) {
+            const $pageDiv = $("#page");
+            $pageDiv.empty();
+
+            const MAX_DISPLAY = 5; // 每次顯示的頁碼數量
+            let startPage = Math.floor((PAGE_SELECT - 1) / MAX_DISPLAY) * MAX_DISPLAY + 1;
+            let endPage = Math.min(startPage + MAX_DISPLAY - 1, PAGE_COUNT);
+
+            // 左箭頭按鈕 (#prev)
+            const $prevBtn = $("#prev");
+            $prevBtn.prop("disabled", startPage === 1);
+            $prevBtn.off("click").on("click", () => {
+                if (startPage > 1) {
+                    let newPage = Math.max(1, startPage - 1);
+                    loadPage(newPage);
+                }
+            });
+
+            // 右箭頭按鈕 (#next)
+            const $nextBtn = $("#next");
+            $nextBtn.prop("disabled", endPage === PAGE_COUNT);
+            $nextBtn.off("click").on("click", () => {
+                if (endPage < PAGE_COUNT) {
+                    let newPage = Math.min(PAGE_COUNT, startPage + MAX_DISPLAY);
+                    loadPage(newPage);
+                }
+            });
+
+            // 中間頁碼
+            for (let i = startPage; i <= endPage; i++) {
+                const $span = $("<span>").text(i).addClass("pageLink");
+                if (i === PAGE_SELECT) $span.addClass("active");
+                $span.on("click", () => loadPage(i));
+                $pageDiv.append($span);
+            }
+        }
+
+    </script>
+
+    <script>
+        ", "AMOUNT_BEFORE": "9893", "AMOUNT_ADD": "0", "AMOUNT_USE": "91", "AMOUNT_ADD_USE": "-91", "AMOUNT_AFTER": "9802", "CreateTime_at": "2024-02-20 10:45:19", "CreateDate_at": "2024-02-20" }, { "serial": 14, "CID_NAME": "Tripday HK \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240305112910024608", "PRODUCT_NAME": "", "AMOUNT_BEFORE": "9802", "AMOUNT_ADD": "0", "AMOUNT_USE": "100", "AMOUNT_ADD_USE": "-100", "AMOUNT_AFTER": "9702", "CreateTime_at": "2024-03-05 11:29:28", "CreateDate_at": "2024-03-05" }, { "serial": 15, "CID_NAME": "Tripday HK \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240306160207529877", "PRODUCT_NAME": "", "AMOUNT_BEFORE": "9702", "AMOUNT_ADD": "0", "AMOUNT_USE": "100", "AMOUNT_ADD_USE": "-100", "AMOUNT_AFTER": "9602", "CreateTime_at": "2024-03-06 16:02:18", "CreateDate_at": "2024-03-06" }, { "serial": 16, "CID_NAME": "SENSESTAR \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240313140220256888", "PRODUCT_NAME": "\u661f\u5e63", "AMOUNT_BEFORE": "9602", "AMOUNT_ADD": "0", "AMOUNT_USE": "3525", "AMOUNT_ADD_USE": "-3525", "AMOUNT_AFTER": "6077", "CreateTime_at": "2024-03-13 14:03:12", "CreateDate_at": "2024-03-13" }, { "serial": 17, "CID_NAME": "SENSESTAR \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240313150846584148", "PRODUCT_NAME": "\u661f\u5e63", "AMOUNT_BEFORE": "6077", "AMOUNT_ADD": "0", "AMOUNT_USE": "3525", "AMOUNT_ADD_USE": "-3525", "AMOUNT_AFTER": "2552", "CreateTime_at": "2024-03-13 15:09:08", "CreateDate_at": "2024-03-13" }, { "serial": 18, "CID_NAME": "KIWI \u9322\u5305\u8cfc\u9ede", "COID": "KB20240314030735", "PRODUCT_NAME": "KIWI \u9322\u5305 1000 \u9ede", "AMOUNT_BEFORE": "2552", "AMOUNT_ADD": "1000", "AMOUNT_USE": "0", "AMOUNT_ADD_USE": "1000", "AMOUNT_AFTER": "3552", "CreateTime_at": "2024-03-14 11:08:08", "CreateDate_at": "2024-03-14" }, { "serial": 19, "CID_NAME": "KIWI \u9322\u5305\u8cfc\u9ede", "COID": "KB20240314030853", "PRODUCT_NAME": "KIWI \u9322\u5305 1000 \u9ede", "AMOUNT_BEFORE": "3552", "AMOUNT_ADD": "1000", "AMOUNT_USE": "0", "AMOUNT_ADD_USE": "1000", "AMOUNT_AFTER": "4552", "CreateTime_at": "2024-03-14 11:09:12", "CreateDate_at": "2024-03-14" }, { "serial": 20, "CID_NAME": "KIWI \u9322\u5305\u8cfc\u9ede", "COID": "KB20240314030921", "PRODUCT_NAME": "KIWI \u9322\u5305 1000 \u9ede", "AMOUNT_BEFORE": "4552", "AMOUNT_ADD": "1000", "AMOUNT_USE": "0", "AMOUNT_ADD_USE": "1000", "AMOUNT_AFTER": "5552", "CreateTime_at": "2024-03-14 11:09:36", "CreateDate_at": "2024-03-14" }]});
+    </script>
+</body>
+
+</html>

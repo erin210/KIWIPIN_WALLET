@@ -1,0 +1,27 @@
+{
+  "name": "kiwi_wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy:stage": "cross-env NODE_ENV=stage node deploy.js",
+    "deploy:prod": "cross-env NODE_ENV=prod node deploy.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1692.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "fast-glob": "^3.3.3",
+    "md5-file": "^5.0.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "cross-env": "^10.0.0"
+  }
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<title>KIWI WALLET</title>
+</script>
+<link rel="icon" href="https://stage-wallet-page-t.kiwipin.com/favicon.png">
+<link rel="icon" href="https://stage-wallet-page-t.kiwipin.com/favicon.ico">
+<script src="https://stage-wallet-page-t.kiwipin.com/assets/js/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://stage-wallet-page-t.kiwipin.com/assets/css/reset.css">
+<link rel="stylesheet" href="https://stage-wallet-page-t.kiwipin.com/assets/css/bootstrap-grid.css">
+<link rel="stylesheet" href="https://stage-wallet-page-t.kiwipin.com/assets/css/select2.min.css" />
+<link rel="stylesheet" href="https://stage-wallet-page-t.kiwipin.com/assets/css/wallet.css">
+<script src="https://stage-wallet-page-t.kiwipin.com/assets/js/translate.js"></script>
+<script src="https://stage-wallet-page-t.kiwipin.com/assets/js/loadingoverlay.min.js"></script>
+<script>
+    function initFunction(jsonObj) {
+        renderInfo(jsonObj);
+    }
+</script>
+</head>
+
+<body class="walletBody">
+    <div id="apiWallet">
+        <div class="container">
+            <aside>
+                <div class="logo">
+                    <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/logo3.svg" alt="">
+                </div>
+                <div class="tabs">
+                    <div class="tab tab1 active" rel="tab1">
+                        <a href="javascript:void(0)">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_add">
+                                <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_tab_add.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_TOPUP">儲值</span></h3>
+                        </a>
+                    </div>
+                    <!-- <div class="tab tab2" rel="tab2">
+                        <i class="oo1"></i>
+                        <i class="oo2"></i>
+                        <span class="imgbox">
+                            <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_tab_add.svg" alt="">
+                        </span>
+                        <h3><span>購買</span></h3>
+                    </div> -->
+                </div>
+            </aside>
+            <div class="tab_container">
+                <div class="loginBar">
+                    <div id="langSelect" class="languageBox">
+                        <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_language.svg" alt="" srcset="">
+                        <span class="lang_text">語言</span>
+                        <ul id="langListItem" class="langListItem">
+                            <ul id="landList">
+                                <li class="active">
+                                    简中
+                                </li>
+                                <li>
+                                    English
+                                </li>
+                                <li>
+                                    日本語
+                                </li>
+                                <li>
+                                    한국어
+                                </li>
+                                <li>
+                                    Tiếng Việt
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div>
+                        <span class="imgbox">
+                            <img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_member.svg" alt="">
+                        </span>
+                        <span id="userID">abc12345@gmail.com</span>
+                        <a href="logout" id="logOutBTN" class="WL_LOGOUT">登出</a>
+                    </div>
+                </div>
+                <div class="scroll_bg outside">
+                    <!-- tab1 op-->
+                    <div id="tab1" class="tab_content">
+                    
+                        <form role="form" id="form1" action="" method="post" target="_self" class="form-payment form_result"
+                            onsubmit="return check_submit1();">
+                            <!-- <div class="form_list reg">
+                                                <h4 class="WL_RETURN_TITLE">儲值結果</h4>
+                                            </div> -->
+                            <div class="result_message">
+                                <img id="Notify_Icon" src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_success.svg" alt="">
+                                <span id="Notify_Title">恭喜！儲值成功</span>
+                            </div>
+                            <div class="result_info"></div>
+                    
+                            <div class="form_bt btn_center">
+                                <a id="confirm" href="home?activeTab=tab1" class="btn btn_blue WL_BACK_HOME_BTN">回總覽</a>
+                            </div>
+                            <input type="hidden" name="data" value="" id="f_data">
+                        </form>
+                    
+                    </div>
+                    <!-- tab1 ed-->
+
+                </div>
+                
+            </div>
+            <a href="mailto:service@kiwipin.com.tw" class="email_info">service@kiwipin.com.tw</a>
+        </div>
+    </div>
+
+    <script>
+
+        function renderInfo(json) {
+            var dataStatus = json.PAY_STATUS;
+            const dataSUCCESS = {
+                "WL_AMOUNT_TITLE": json.AMOUNT,
+                "WL_COID_TITLE": json.COID,
+                "WL_DATE_TITLE": json.CreateTime_at,
+                "WL_RMSG_CHI_TITLE": json.RMSG_CHI
+            }
+            const dataERROR = {
+                "WL_AMOUNT_TITLE": String(json.AMOUNT),
+                "WL_COID_TITLE": json.COID,
+                "WL_RMSG_CHI_TITLE": json.RMSG_CHI
+            }
+            if (json.PAY_STATUS == "S") {
+                $('#Notify_Icon').attr("src", "https://stage-wallet-page-t.kiwipin.com/assets/img/icon_success.svg");
+                $("#Notify_Title").removeClass("WL_NOTIFY_TITLE_S WL_NOTIFY_TITLE_F").addClass('WL_NOTIFY_TITLE_S');
+                resultINFO(dataSUCCESS, dataStatus);
+                $('.result_info').removeAttr('id', "ERROR_INFO");
+
+            } else {
+                $('#Notify_Icon').attr("src", "https://stage-wallet-page-t.kiwipin.com/assets/img/icon_error.svg");
+                $("#Notify_Title").removeClass("WL_NOTIFY_TITLE_S WL_NOTIFY_TITLE_F").addClass('WL_NOTIFY_TITLE_F').css({ 'color': 'var(--error)' });
+                resultINFO(dataERROR, dataStatus);
+                $('.result_info').addClass('error_info');
+                $('.btn').show();
+            }
+
+            Object.keys(json).forEach(function (k) {
+                var eleName = '#' + k;
+                if ($(eleName).length <= 0) {
+                    appendElement_Input('#form', k, json[k]);
+                } else {
+                    $(eleName).val(json[k]);
+                }
+            });
+            
+            $('#userID').text(json.U_EMAIL);
+            
+            initTranslation(json)//翻譯
+        }
+
+
+        //印資料
+        function resultINFO(data, status) {
+            $(".result_info").empty();
+
+            Object.entries(data).forEach(([key, value]) => {
+                const AMOUNT_S = `<span class="amount_ss">${formatCurrency(value)}</span><b class="WL_POINT"></b>`;
+                const AMOUNT_F = `<span class="amount_ff">${value}</span><b class="WL_POINT"></b>`;
+
+                console.log(AMOUNT_F);
+                const TimeTXT = formatTime(value);
+
+                const htmlINFO = `
+                    <div class="item">
+                        <h1 class="title ${key}"></h1>
+                        <h1 class="content">${(status == "F" && key == "WL_AMOUNT_TITLE") ? AMOUNT_F :
+                        (status == "S" && key == "WL_AMOUNT_TITLE") ? AMOUNT_S :
+                            (status == "S" && key == "WL_DATE_TITLE") ? TimeTXT : value
+                    }</h1>
+                    </div>`;
+                $(".result_info").append(htmlINFO);
+            });
+        }
+
+
+        function appendElement_Input(ele, name, value) {
+            var textHtml = '<input type="hidden" name="' + name + '"';
+            textHtml += ' value="' + value + '"';
+            textHtml += '/>';
+            $(ele).append(textHtml);
+        }
+
+        function check_submit() {
+            //鎖住畫面
+            $.LoadingOverlay("show", {
+                image: "",  // 不用預設圖片
+                custom: $("<div>", { class: "custom-spinner" })[0],
+                background: "rgba(255,255,255,0.8)"
+            });
+            document.getElementById('form').submit();
+        }
+
+        //千元標註
+        function formatCurrency(number) {
+            if (isNaN(number)) return null;
+            return parseFloat(number).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        //時間標註
+        function formatTime(tt) {
+            const dateTime = tt;
+            const [datePart, timePart] = dateTime.split(" ");
+            const formattedDateTime = `${datePart} <b class="timetxt">${timePart}</b>`;
+            return formattedDateTime;
+        }
+
+        //code_cpoy
+        $('.result_info').on('click', '.code_copy', async function () {
+            var contentText = $('.result_info .item:first-child').find('.content');
+            var originalText = contentText.text(); //儲值密碼
+
+            try {
+                //複製
+                await navigator.clipboard.writeText(originalText);
+                contentText.text('複製成功！');
+
+                //恢復
+                setTimeout(function () {
+                    contentText.html(originalText + '<span class="code_copy"><img src="https://stage-wallet-page-t.kiwipin.com/assets/img/icon_copy.svg" alt="copy"/></span>');
+                }, 1000);
+            } catch (error) {
+                console.error("複製失敗：", error);
+            }
+        });
+    </script>
+
+    <script>
+        
+    </script>
+</body>
+
+</html>

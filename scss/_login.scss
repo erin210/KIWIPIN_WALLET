@@ -1,0 +1,415 @@
+//@import "_variable";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap");
+
+.custom-checkbox label::before {
+    border: 1px solid $text_grey2;
+    background-color: transparent;
+}
+
+body {
+    font-family: "Noto Sans TC", "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 100%;
+    letter-spacing: 0.05em;
+
+    &.walletLogin {
+        // background-color: $dark;
+        background-color: $bg_grey;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+
+        // overflow: auto;
+        // padding: 2%;
+        &::before {
+            position: fixed;
+            top: 0;
+            right: 0;
+            content: "";
+            width: 50%;
+            height: 100vh;
+            display: block;
+
+            // z-index: 1;
+            background-color: $bg_grey;
+
+            @include breakpoint("sm", "max") {
+                top: inherit;
+                bottom: 0;
+                width: 100%;
+                height: 50%;
+
+                // display: none;
+            }
+
+
+            @include m___m {
+                top: inherit;
+                bottom: 0;
+                width: 100%;
+                height: 39%;
+
+                // display: none;
+            }
+        }
+
+        // &::after {
+        //     content: '';
+        //     position: fixed;
+        //     left: -8%;
+        //     bottom: -10vh;
+        //     width: 20vw;
+        //     height: 25vw;
+        //     background: url("../img/bg_im.svg") no-repeat 10% bottom;
+        //     background-size: cover;
+        //     transform: scaleX(-1); /* 左右翻轉
+        //     // filter: flipH(); /* 如果支持,用於翻轉背景
+        //     z-index: -1; /* 背景層
+        //     // border: 1px solid #f00;
+
+        // }
+
+        #apiWallet {
+            .container {
+                padding: 0;
+
+                .tab_container {
+                    height: auto;
+                    border-radius: 0;
+                    padding: 2.5% 3.5% 3% 10%;
+
+                    // overflow: auto;
+                    @include breakpoint("lg", "max") {
+                        padding: 3% 4% 3% 6%;
+                    }
+
+
+                    .logo {
+                        text-align: center;
+                        margin-bottom: 5%;
+
+                        img {
+                            width: 25%;
+                        }
+                    }
+
+                    @include m___m {
+                        height: fit-content;
+                        padding: 2.5% 6%;
+                        border-radius: 0 70px 0 0;
+
+                        .logo {
+                            display: none;
+                        }
+                    }
+                }
+
+                aside {
+                    position: relative;
+                    width: 300px;
+                    height: 100vh;
+                    overflow: hidden;
+
+                    // border: 1px solid #f00;
+                    .logo {
+                        display: none;
+                    }
+
+                    .tabs {
+                        position: fixed;
+
+                        // left: calc(250px + (10vw / 2));
+                        // top: 30%;
+                        width: 250px;
+                        margin-left: 49px;
+                        margin-top: 35vh;
+
+                        div.tab {
+                            .bg_im {
+                                display: none;
+                            }
+
+                            &.active {
+                                .bg_im {
+                                    display: block;
+                                    position: absolute;
+                                    top: 0;
+                                    left: -78%;
+                                    margin-top: -82%;
+                                    width: 168%;
+                                    height: auto;
+
+                                    img {
+                                        width: 100%;
+                                        height: auto;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @media screen and (min-width: 1200px) {
+                        .tabs {
+                            margin-left: 3.05rem;
+                        }
+                    }
+
+                    @include breakpoint("lg", "max") {
+                        width: 35%;
+
+                        .tabs {
+                            // width: 15%;
+                            // margin-left: 16.8%;
+                            width: 18%;
+                            margin-left: 13.8%;
+
+                            // margin-left: inherit;
+                            div.tab {
+                                &.active {
+                                    .bg_im {
+                                        // top: calc(-50% - 5em);
+                                        // left: -82%;
+                                        // margin-top: -78%;
+                                        // width: 180%;
+                                        left: -74%;
+                                        margin-top: -74%;
+                                        width: 173%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    @include m___m {
+                        width: 100%;
+                        height: inherit;
+
+                        .tabs {
+                            display: none;
+
+                            div.tab {
+                                &.active {
+                                    .bg_im {
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+
+                        .logo {
+                            width: 100%;
+                            display: block;
+                            margin: 20px 0;
+                        }
+                    }
+                }
+
+                .form-payment {
+                    .form_list {
+                        h4 {
+                            text-align: center;
+                            display: none;
+                        }
+
+                        & > p {
+                            // width: 100%;
+                            text-align: center;
+                            font-size: 16px;
+
+                            // font-weight: 300;
+                            color: $text_grey2;
+                            margin-bottom: 5svh;
+                            line-height: 1.4;
+
+                            @include breakpoint("md", "max") {
+                                font-size: 16px;
+                            }
+                        }
+
+                        &.reg {
+                            .send_code {
+                                display: flex;
+                                flex-grow: 1;
+
+                                input {
+                                    border-radius: 10px 0 0 10px;
+                                }
+
+                                a {
+                                    width: fit-content;
+                                    background-color: $text_grey2;
+                                    color: $white;
+                                    margin-top: 14px;
+                                    border-radius: 0 10px 10px 0;
+                                    text-decoration: none;
+
+                                    // display: block;
+                                    padding: 1.2em 1.5em;
+                                    text-wrap: nowrap;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                }
+
+                                &.countdown {
+                                    a {
+                                        display: flex;
+                                        align-items: center;
+                                        color: $text_grey2;
+                                        background-color: $light_grey3;
+                                        border-left: 1px solid $text_grey2;
+                                        vertical-align: middle;
+
+                                        img {
+                                            margin-right: .5em;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .form_bt {
+                        margin-top: 1.5em;
+                        justify-content: space-between;
+                        align-items: baseline;
+                        text-align: left;
+
+                        p {
+                            color: $primary;
+
+                            &.formbt_link {
+                                display: none;
+                            }
+                        }
+
+                        .terms {
+                            margin-bottom: 1em;
+                            padding-right: 10px;
+
+                            & > input {
+                                width: auto;
+                            }
+
+                            a {
+                                color: $text_grey2;
+                            }
+
+                            &.custom-checkbox {
+                                label {
+                                    font-size: 18px;
+
+                                    &::before {
+                                        margin-top: 3px;
+                                    }
+
+                                    &::after {
+                                        margin-top: 3px;
+                                    }
+
+                                    @include breakpoint("lg", "max") {
+                                        font-size: 16px;
+
+                                        &::before {
+                                            top: 2px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    @include m___m {
+                        .form_list {
+                            margin-top: 0;
+
+                            h4 {
+                                display: block;
+                                font-size: 24px;
+                                margin: 25px 0;
+                            }
+
+                            p {
+                                font-size: 12px;
+                                letter-spacing: 0;
+
+                                // white-space: nowrap;
+                                &.formbt_link {
+                                    display: block;
+                                    margin-bottom: 2em;
+                                }
+                            }
+
+                            span {
+                                letter-spacing: 0;
+                            }
+                        }
+
+                        .form_list {
+                            &.reg {
+                                .send_code {
+                                    a {
+                                        font-size: 12px;
+                                    }
+                                }
+                            }
+                        }
+
+                        .form_bt {
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: center;
+                            width: 100%;
+                            height: auto;
+
+                            .terms {
+                                margin-top: 2em;
+                                margin-bottom: 2em;
+
+                                &.custom-checkbox {
+                                    label {
+                                        font-size: 12px;
+
+                                        &::before, &::after {
+                                            margin-top: 0;
+                                        }
+
+                                        &::before {
+                                            width: 13px;
+                                            height: 13px;
+                                        }
+
+                                        &::after {
+                                            top: 3px;
+                                            left: 5px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                @include m___m {
+                    align-items: center;
+                    height: fit-content;
+                }
+            }
+        }
+
+        @include m___m {
+            display: block;
+            min-height: 100dvh;
+
+            #apiWallet .container aside .tabs.tab_nnn {
+                display: none;
+            }
+        }
+    }
+}

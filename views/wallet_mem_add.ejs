@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('layout/head') %>
+</head>
+
+<body class="walletBody">
+    <div id="apiWallet">
+        <div class="container">
+            <aside>
+                <div class="logo">
+                    <img src="<%- wallet %>/assets/img/logo3.svg" alt="">
+                </div>
+                <div class="tabs">
+                    <div class="tab tab1 active" rel="tab1">
+                        <a href="javascript:void(0)">
+                            <i class="oo1"></i>
+                            <i class="oo2"></i>
+                            <span class="imgbox tab_add">
+                                <img src="<%- wallet %>/assets/img/icon_tab_add.svg" alt="">
+                            </span>
+                            <h3><span class="WL_TAB_TOPUP">儲值</span></h3>
+                        </a>
+                    </div>
+                    <!-- <div class="tab tab2" rel="tab2">
+                        <i class="oo1"></i>
+                        <i class="oo2"></i>
+                        <span class="imgbox">
+                            <img src="<%- wallet %>/assets/img/icon_tab_add.svg" alt="">
+                        </span>
+                        <h3><span>購買</span></h3>
+                    </div> -->
+                </div>
+            </aside>
+            <div class="tab_container">
+                <div class="loginBar">
+                    <div>
+                        <a href="home">
+                            <span class="imgbox arrow">
+                                <img src="<%- wallet %>/assets/img/icon_prev_arrow.svg" alt="">
+                            </span> <b class="WL_BACK_BTN">返回</b></a>
+                    </div>
+                    <div>
+                        <span class="imgbox">
+                            <img src="<%- wallet %>/assets/img/icon_member.svg" alt="">
+                        </span>
+                        <span id="userID">abc12345@gmail.com</span>
+                        <a href="logout" id="logOutBTN" class="WL_LOGOUT">登出</a>
+                    </div>
+                </div>
+                <h4 class="WL_WALLET_TOPUP">儲值錢包</h4>
+                <div class="scroll_bg">
+                    <!-- tab1 op-->
+                    <div id="tab1" class="tab_content">
+                        <form role="form" id="form" action="" method="post" target="_self" class="form-payment">
+                            
+                                <div class="card_wrapper">
+                                    <div class="item">
+                                        <a href="javascript:void(0)" onclick="purchase('100',this)">
+                                            <figure class="card">
+                                                <img src="<%- wallet %>/assets/img/point_card100.png" alt="">
+                                            </figure>
+                                        </a>
+                                        <div class="price">
+                                            <span>$<i>1</i></span>USD
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="javascript:void(0)" onclick="purchase('300',this)">
+                                            <figure class="card">
+                                                <img src="<%- wallet %>/assets/img/point_card300.png" alt="">
+                                            </figure>
+                                        </a>
+                                        <div class="price">
+                                            <span>$<i>3</i></span>USD
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="javascript:void(0)" onclick="purchase('500',this)">
+                                            <figure class="card">
+                                                <img src="<%- wallet %>/assets/img/point_card500.png" alt="">
+                                            </figure>
+                                        </a>
+                                        <div class="price">
+                                            <span>$<i>5</i></span>USD
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="javascript:void(0)" onclick="purchase('1000',this)">
+                                            <figure class="card">
+                                                <img src="<%- wallet %>/assets/img/point_card1000.png" alt="">
+                                            </figure>
+                                        </a>
+                                        <div class="price">
+                                            <span>$<i>10</i></span>USD
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="javascript:void(0)" onclick="purchase('2000',this)">
+                                            <figure class="card">
+                                                <img src="<%- wallet %>/assets/img/point_card2000.png" alt="">
+                                            </figure>
+                                        </a>
+                                        <div class="price">
+                                            <span>$<i>20</i></span>USD
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="javascript:void(0)" onclick="purchase('3000',this)">
+                                            <figure class="card">
+                                                <img src="<%- wallet %>/assets/img/point_card3000.png" alt="">
+                                            </figure>
+                                        </a>
+                                        <div class="price">
+                                            <span>$<i>30</i></span>USD
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="javascript:void(0)" onclick="purchase('4000',this)">
+                                            <figure class="card">
+                                                <img src="<%- wallet %>/assets/img/point_card4000.png" alt="">
+                                            </figure>
+                                        </a>
+                                        <div class="price">
+                                            <span>$<i>40</i></span>USD
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="javascript:void(0)" onclick="purchase('5000',this)">
+                                            <figure class="card">
+                                                <img src="<%- wallet %>/assets/img/point_card5000.png" alt="">
+                                            </figure>
+                                        </a>
+                                        <div class="price">
+                                            <span>$<i>50</i></span>USD
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="javascript:void(0)" onclick="purchase('10000',this)">
+                                            <figure class="card">
+                                                <img src="<%- wallet %>/assets/img/point_card10000.png" alt="">
+                                            </figure>
+                                        </a>
+                                        <div class="price">
+                                            <span>$<i>100</i></span>USD
+                                        </div>
+                                    </div>
+                                    <div class="item">
+                                        <a href="javascript:void(0)" onclick="purchase('30000',this)">
+                                            <figure class="card">
+                                                <img src="<%- wallet %>/assets/img/point_card30000.png" alt="">
+                                            </figure>
+                                        </a>
+                                        <div class="price">
+                                            <span>$<i>300</i></span>USD
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="U_PURCHASE_AMOUNT" value="0" id="U_PURCHASE_AMOUNT">
+                                    <input id="U_LANGUAGE" type="hidden" name="U_LANGUAGE" value="">
+                                </div>
+                        </form>
+
+                    </div>
+                    <!-- tab1 ed-->
+                    </div>
+            </div>
+            <a href="mailto:service@kiwipin.com.tw" class="email_info">service@kiwipin.com.tw</a>
+        </div>
+    </div>
+
+    <script>
+        // console.log(window.location.hostname);
+        //     console.log('Page Base URL:', pageBaseUrl);
+        //     console.log('API Base URL:', apiUrl);
+
+        // $(function () {
+        //     $('base').attr('href', apiUrl);
+        // });
+
+
+        function renderInfo(json) {
+
+            Object.keys(json).forEach(function (k) {
+                var eleName = '#' + k;
+                //console.log(eleName + ' - ' + json[k]);
+                if ($(eleName).length <= 0) {
+                    appendElement_Input('#form', k, json[k]);
+                } else {
+                    $(eleName).val(json[k]);
+                }
+            });
+
+            $('#userID').text(json.U_EMAIL);
+            
+            initTranslation(json)//翻譯
+            
+            $("#U_LANGUAGE").val(thisLang);
+
+        }
+
+        function appendElement_Input(ele, name, value) {
+            var textHtml = '<input type="hidden" name="' + name + '"';
+            textHtml += ' value="' + value + '"';
+            textHtml += '/>';
+            $(ele).append(textHtml);
+        }
+
+        function purchase(amount, ele) {
+            $('#U_PURCHASE_AMOUNT').val(amount);
+            $('#U_LANGUAGE').val();
+            
+            
+            document.getElementById('form').submit();
+        }
+    </script>
+
+    <script>
+        initFunction({ "Tpye": "PURCHASE", "U_EMAIL": "yourweb210@gmail.com", "LanguageList": { "en_US": "English", "zh_TW": "\u4e2d\u6587" }, "StringID": {
+                    "en_US": {
+                "WL_TAB_LOGIN": "Login",
+                "WL_TAB_REGISTER": "Sign Up",
+                "WL_TAB_FORGET_PW": "Reset Password",
+                "WL_BACK_LOGIN": "Back to Login",
+                "WL_CONFIRM": "Confirm",
+                "WL_LOGIN_REMIND": "For your security, KIWI WALLET requires login. Please sign in to access services.",
+                "WL_U_EMAIL_TITLE": "Email",
+                "WL_U_EMAIL_HINT": "Enter Email",
+                "WL_U_EMAIL_MSG_EMPTY": "Email required",
+                "WL_MSG_ERROR": "Enter a valid Email",
+                "WL_U_PASSWORD_TITLE": "Password",
+                "WL_U_PASSWORD_HINT": "Enter Password",
+                "WL_U_PASSWORD_MSG_EMPTY": "Password required",
+                "WL_U_PASSWORD_MSG_ERROR": "Password must be 8+ chars, letters & numbers",
+                "WL_FORGET_PW": "Forgot Password?",
+                "WL_LOGIN_NOTICE": "No account?",
+                "WL_BTN_GO_REG": "Register",
+                "WL_FORGET_PW_REMIND": "Enter your registered email to receive a code. Use the code to reset password.",
+                "WL_SEND_VERIFY_CODE_BTN": "Send Code",
+                "WL_SEND_VERIFY_CODE_ING": "Sending...",
+                "WL_SEND_VERIFY_CODE_COUNT": "Sent",
+                "WL_SEND_VERIFY_CODE_RESEND": "Resend",
+                "WL_VERIFY_TITLE_S": "Code Sent",
+                "WL_VERIFY_INFO_S": "Code sent to:",
+                "WL_VERIFY_TITLE_F": "Error",
+                "WL_VERIFY_INFO_F": "Failed: Email already in use!",
+                "WL_SUBMIT_TITLE_F": "Error",
+                "WL_SUBMIT_INFO_F": "Invalid or expired code!",
+                "WL_U_VERIFY_CODE_TITLE": "Verification Code",
+                "WL_U_VERIFY_CODE_HINT": "Enter Code",
+                "WL_U_VERIFY_CODE_MSG_EMPTY": "Code required",
+                "WL_FORGET_PW_SUBMIT_TITLE_S": "Password Changed!",
+                "WL_FORGET_PW_SUBMIT_INFO_S": "New password sent to your email. Please log in again.",
+                "WL_U_PAY_PASSWORD_TITLE": "Pay PIN",
+                "WL_U_PAY_PASSWORD_HINT": "Enter Wallet PIN",
+                "WL_U_PAY_PASSWORD_MSG_EMPTY": "PIN required",
+                "WL_U_PAY_PASSWORD_MSG_ERROR": "Enter 6 digits",
+                "WL_U_PAY_PASSWORD_CHECK_TITLE": "Confirm PIN",
+                "WL_U_PAY_PASSWORD_CHECK_HINT": "Re-enter Wallet PIN",
+                "WL_U_PAY_PASSWORD_CHECK_MSG_EMPTY": "Confirm PIN required",
+                "WL_U_PAY_PASSWORD_CHECK_MSG_ERROR": "PINs do not match",
+                "WL_AGREE_LABEL": "I agree to",
+                "WL_AGREE_LABEL_LINK1": "Terms of Service",
+                "WL_AGREE_LABEL_LINK2": "Privacy Policy",
+                "WL_AGREE_HINT": "Please agree",
+                "WL_REG_SUBMIT_TITLE_S": "Sign Up Success!",
+                "WL_REG_SUBMIT_INFO_S": "Registered successfully. Please log in.",
+                "WL_TAB_HOME": "Overview",
+                "WL_TAB_HISTORY": "History",
+                "WL_TAB_CHANGE_PAY_PASSWORD": "Payment Settings",
+                "WL_TAB_CHANGE_PASSWORD": "Account Settings",
+                "WL_TAB_TOPUP": "Top Up",
+                "WL_SUMMARY": "Wallet Overview",
+                "WL_BALANCE": "Balance",
+                "WL_POINT": "Points",
+                "WL_HISTORY_DATE": "Date",
+                "WL_HISTORY_CID_NAME": "Service",
+                "WL_HISTORY_PRODUCT_NAME": "Product",
+                "WL_HISTORY_COID": "Order ID",
+                "WL_HISTORY_AMOUNT_ADD_USE": "Points Used",
+                "WL_HISTORY_AMOUNT_AFTER": "Remaining Points",
+                "WL_RESET_PAY_PW": "Change Pay PIN",
+                "WL_RESET_U_PAY_PASSWORD_TITLE": "Old Pay PIN",
+                "WL_RESET_U_PAY_PASSWORD_HINT": "Enter old PIN",
+                "WL_RESET_U_NEW_PAY_PASSWORD_HINT": "Enter new PIN",
+                "WL_RESET_U_NEW_PAY_PASSWORD_MSG_EMPTY": "New PIN required",
+                "WL_RESET_U_NEW_PAY_PASSWORD_CHECK_HINT": "Re-enter new PIN",
+                "WL_RESET_U_NEW_PAY_PASSWORD_CHECK_MSG_EMPTY": "Confirm new PIN required",
+                "WL_RESET_PWTITLE": "Change Password",
+                "WL_RESET_U_PASSWORD_TITLE": "Old Password",
+                "WL_RESET_U_PASSWORD_HINT": "Enter old password",
+                "WL_RESET_U_NEW_PASSWORD_HINT": "Enter new password",
+                "WL_RESET_U_NEW_PASSWORD_MSG_EMPTY": "New password required",
+                "WL_RESET_U_NEW_PASSWORD_CHECK_HINT": "Re-enter new password",
+                "WL_RESET_U_NEW_PASSWORD_CHECK_MSG_EMPTY": "Confirm new password required",
+                "WL_RESET_NEW_PASSWORD": "New Password",
+                "WL_RESET_NEW_PASSWORD_CHECK": "Confirm Password",
+                "WL_RESET_BTN": "Change",
+                "WL_WALLET_TOPUP": "Top Up Wallet",
+                "WL_BACK_BTN": "Back"
+            },
+            "zh_TW": {
+                "WL_TAB_LOGIN": "登入",
+                "WL_TAB_REGISTER": "註冊",
+                "WL_TAB_FORGET_PW": "重設密碼",
+                "WL_BACK_LOGIN": "返回登入",
+                "WL_CONFIRM": "確認",
+                "WL_LOGIN_REMIND": "為保障您的權益，KIWI WALLET 需要登入帳號才能使用，請您登入會員，以享有便利的服務",
+                "WL_U_EMAIL_TITLE": "會員信箱",
+                "WL_U_EMAIL_HINT": "請輸入Email",
+                "WL_U_EMAIL_MSG_EMPTY": "請填寫Email",
+                "WL_MSG_ERROR": "請輸入有效的 Email 格式",
+                "WL_U_PASSWORD_TITLE": "登入密碼",
+                "WL_U_PASSWORD_HINT": "請輸入會員密碼",
+                "WL_U_PASSWORD_MSG_EMPTY": "請填寫登入密碼",
+                "WL_U_PASSWORD_MSG_ERROR": "密碼須為英數混合8字元以上",
+                "WL_FORGET_PW": "忘記密碼？",
+                "WL_LOGIN_NOTICE": "還沒有帳號？",
+                "WL_BTN_GO_REG": "去註冊",
+                "WL_FORGET_PW_REMIND": "請輸入已註冊的信箱，系統會發送驗證碼。再請輸入正確的驗證碼，以便重設密碼",
+                "WL_SEND_VERIFY_CODE_BTN": "發送驗證碼",
+                "WL_SEND_VERIFY_CODE_ING": "發送中...",
+                "WL_SEND_VERIFY_CODE_COUNT": "已發送",
+                "WL_SEND_VERIFY_CODE_RESEND": "重新發送",
+                "WL_VERIFY_TITLE_S": "驗證碼發送成功",
+                "WL_VERIFY_INFO_S": "驗證碼已發送到：",
+                "WL_VERIFY_TITLE_F": "發生錯誤了",
+                "WL_VERIFY_INFO_F": "驗證碼發送失敗:此 EMail 已經使用!",
+                "WL_SUBMIT_TITLE_F": "發生錯誤了",
+                "WL_SUBMIT_INFO_F": "驗證碼錯誤或已失效!",
+                "WL_U_VERIFY_CODE_TITLE": "驗證碼",
+                "WL_U_VERIFY_CODE_HINT": "請輸入驗證碼",
+                "WL_U_VERIFY_CODE_MSG_EMPTY": "請填寫驗證碼",
+                "WL_FORGET_PW_SUBMIT_TITLE_S": "修改密碼成功！",
+                "WL_FORGET_PW_SUBMIT_INFO_S": "新密碼已發送至Email，請牢記您的密碼，並重新登入",
+                "WL_U_PAY_PASSWORD_TITLE": "交易密碼",
+                "WL_U_PAY_PASSWORD_HINT": "請輸入錢包交易密碼",
+                "WL_U_PAY_PASSWORD_MSG_EMPTY": "請填寫交易密碼",
+                "WL_U_PAY_PASSWORD_MSG_ERROR": "請輸入六位數字",
+                "WL_U_PAY_PASSWORD_CHECK_TITLE": "確認交易密碼",
+                "WL_U_PAY_PASSWORD_CHECK_HINT": "請再次輸入錢包交易密碼",
+                "WL_U_PAY_PASSWORD_CHECK_MSG_EMPTY": "請再次填寫交易密碼",
+                "WL_U_PAY_PASSWORD_CHECK_MSG_ERROR": "二次輸入新密碼不一致",
+                "WL_AGREE_LABEL": "閱讀並同意",
+                "WL_AGREE_LABEL_LINK1": "會員服務條款",
+                "WL_AGREE_LABEL_LINK2": "隱私權政策",
+                "WL_AGREE_HINT": "請勾選同意",
+                "WL_REG_SUBMIT_TITLE_S": "註冊成功！",
+                "WL_REG_SUBMIT_INFO_S": "註冊成功，請重新登入",
+                "WL_TAB_HOME": "總覽",
+                "WL_TAB_HISTORY": "歷史交易",
+                "WL_TAB_CHANGE_PAY_PASSWORD": "交易設定",
+                "WL_TAB_CHANGE_PASSWORD": "帳戶設定",
+                "WL_TAB_TOPUP": "儲值",
+                "WL_SUMMARY": "錢包總覽",
+                "WL_BALANCE": "錢包餘額",
+                "WL_POINT": "點",
+                "WL_HISTORY_DATE": "交易日期",
+                "WL_HISTORY_CID_NAME": "服務名稱",
+                "WL_HISTORY_PRODUCT_NAME": "商品名稱",
+                "WL_HISTORY_COID": "訂單編號",
+                "WL_HISTORY_AMOUNT_ADD_USE": "交易點數",
+                "WL_HISTORY_AMOUNT_AFTER": "剩餘點數",
+                "WL_RESET_PAY_PW": "變更交易密碼",
+                "WL_RESET_U_PAY_PASSWORD_TITLE": "原交易密碼",
+                "WL_RESET_U_PAY_PASSWORD_HINT": "請輸入原交易密碼",
+                "WL_RESET_U_NEW_PAY_PASSWORD_HINT": "請輸入交易新密碼",
+                "WL_RESET_U_NEW_PAY_PASSWORD_MSG_EMPTY": "請填寫新交易密碼",
+                "WL_RESET_U_NEW_PAY_PASSWORD_CHECK_HINT": "請再次輸入交易新密碼",
+                "WL_RESET_U_NEW_PAY_PASSWORD_CHECK_MSG_EMPTY": "請再次填寫新交易密碼",
+                "WL_RESET_PWTITLE": "變更帳戶密碼",
+                "WL_RESET_U_PASSWORD_TITLE": "原帳戶密碼",
+                "WL_RESET_U_PASSWORD_HINT": "請輸入原帳戶密碼",
+                "WL_RESET_U_NEW_PASSWORD_HINT": "請輸入帳戶新密碼",
+                "WL_RESET_U_NEW_PASSWORD_MSG_EMPTY": "請填寫新帳戶密碼",
+                "WL_RESET_U_NEW_PASSWORD_CHECK_HINT": "請再次輸入帳戶新密碼",
+                "WL_RESET_U_NEW_PASSWORD_CHECK_MSG_EMPTY": "請再次填寫新帳戶新密碼",
+                "WL_RESET_NEW_PASSWORD": "新密碼",
+                "WL_RESET_NEW_PASSWORD_CHECK": "確認新密碼",
+                "WL_RESET_BTN": "變更",
+                "WL_WALLET_TOPUP": "儲值錢包",
+                "WL_BACK_BTN": "返回"
+            }
+
+                } });
+    </script>
+</body>
+
+</html>
