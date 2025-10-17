@@ -1,5 +1,6 @@
 require('dotenv').config();//讀取.env
 
+
 const AWS = require('aws-sdk');
 const fg = require('fast-glob');
 const md5File = require('md5-file');

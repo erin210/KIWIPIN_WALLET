@@ -9,3 +9,6 @@ node_modules/
 
 # Mac 系統檔
 .DS_Store
+
+# AWS 權限
+kiwipin.zshrkc
