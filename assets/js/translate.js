@@ -224,6 +224,17 @@ function initTranslation(json) {
 
     translate(json);
 
+    // 手機點擊切換選單展開／收合
+    $('.languageBox').on('click', function (e) {
+        // 避免點擊 li 時冒泡
+        e.stopPropagation();
+
+        // 手機版條件：螢幕小於等於 1024px
+        if (window.innerWidth <= 1024) {
+            $(this).toggleClass('active');
+        }
+    });
+
     // 語言切換點擊事件
     $('#landList li').on('click', function () {
         let selectLang = $(this).data('lang');
@@ -243,6 +254,17 @@ function initTranslation(json) {
         // alert(selectLang)
         // window.location.reload();
         translate(json);
+
+        // 手機收回選單
+        if (window.innerWidth <= 1024) {
+            $(this).closest('.languageBox').removeClass('active');
+        }
+    });
+    // 點擊頁面其他區域也關閉選單（手機）
+    $(document).on('click', function () {
+        if (window.innerWidth <= 1024) {
+            $('.languageBox').removeClass('active');
+        }
     });
 }
 

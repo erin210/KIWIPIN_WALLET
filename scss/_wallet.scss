@@ -361,7 +361,7 @@ input[type="password"]::-ms-clear {
         }
     }
 
-    &:hover {
+    &:hover, &.active {
         .langListItem {
             height: auto;
             transform: scaleY(1);
