@@ -93,7 +93,7 @@ viewFiles.forEach(relativePath => {
 app.use(cors());           // 允許本地前端跨域
 app.use(express.json());   // 解析 JSON body
 
-const PORT = 3001; // 本地 proxy port
+const PORT = 3000; // 本地 proxy port
 
 app.post("/sendVerifyCode", async (req, res) => {
   try {

@@ -55,15 +55,16 @@ select {
     font-weight: 400;
     width: -webkit-fill-available;
     width: -moz-available;
-    color: $text_grey2;
+    color: $logo_grey;
     letter-spacing: 0;
 
     /*firefox*/
-    padding: 1.2em;
-    border: 1px solid transparent;
+    padding:1em 1.2em;
+    border: 1px solid #f4f4f3;
     border-radius: 10px;
-    margin-top: 14px;
-    background-color: $light_grey4;
+    margin-top: 1.8svh;
+    // background-color: $light_grey4;
+    background-color: $white;
     margin-right: 0;
 
     &.input_error:focus-visible {
@@ -144,7 +145,10 @@ small {
     width: 1rem;
     margin-right: 0.3rem;
 }
-
+.text_left{
+    text-align: left;
+    text-align: justify;
+}
 input[type=radio] {
     background-color: $text_grey2;
     appearance: none;
@@ -188,7 +192,7 @@ input[type="password"]::-ms-clear {
 
     label {
         position: relative;
-        padding-left: 24px;
+        // padding-left: 24px;
         cursor: pointer;
         user-select: none;
 
@@ -196,7 +200,7 @@ input[type="password"]::-ms-clear {
             content: "";
             position: absolute;
             top: 3px;
-            left: 0;
+            left: -1.5em;
             width: 15px;
             height: 15px;
             border: 1px solid $light_grey3;
@@ -210,7 +214,7 @@ input[type="password"]::-ms-clear {
             position: absolute;
             display: none;
             top: 5px;
-            left: 6px;
+            left: -18px;
             width: 4px;
             height: 8px;
             border: solid white;
@@ -234,7 +238,7 @@ input[type="password"]::-ms-clear {
 .btn {
     width: 50%;
     color: $white;
-    padding: 1.2em;
+    padding: 1em;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -292,7 +296,7 @@ input[type="password"]::-ms-clear {
     }
 
     @include m___m {
-        font-size: 14px;
+        font-size: 15px;
     }
 }
 
@@ -346,13 +350,14 @@ input[type="password"]::-ms-clear {
         transition: transform 0.3s ease, opacity 0.5s ease;
 
         & > ul {
-            padding: 15px 0;
+            padding: 10px;
             background-color: $text_grey2;
-            border-radius: 10px;
+            border-radius: 15px;
 
             li {
                 // line-height: 2;
-                padding: .5em 15px;
+                padding: .7em 10px;
+                border-radius: 10px;
 
                 &:hover {
                     background-color: var(--primary);
@@ -368,7 +373,9 @@ input[type="password"]::-ms-clear {
             opacity: 1;
         }
     }
+
 }
+
 
 #apiWallet {
     display: flex;
@@ -412,8 +419,8 @@ input[type="password"]::-ms-clear {
             justify-content: flex-start;
             order: 2;
             max-width: 100%;
-            padding-top: 20px;
-            padding-bottom: 20px;
+            // padding-top: 20px;
+            // padding-bottom: 20px;
         }
 
 
@@ -454,10 +461,12 @@ input[type="password"]::-ms-clear {
 
 
             .logo {
+                position: relative;
+                z-index: 99;
                 z-index: 9;
                 display: block;
                 width: 100%;
-                padding: 10px 39px;
+                padding: 10px 42px;
                 padding-top: 50px;
                 text-align: center;
                 box-sizing: border-box;
@@ -568,6 +577,10 @@ input[type="password"]::-ms-clear {
                         font-weight: 400;
                         color: $white;
                         text-align: left;
+                        text-transform:uppercase;
+                        line-height: 1.2;
+                
+                        
 
                         @include m___m {
                             font-weight: 600;
@@ -694,33 +707,33 @@ input[type="password"]::-ms-clear {
                             position: absolute;
                             right: 0;
                             width: 50px;
-                            height: 50px;
+                            height: 90svh;
                             background-color: $bg_grey;
                             display: block;
                             overflow: hidden;
-                            border-right: 1px solid $bg_grey;
+                            // border-right: 1px solid $bg_grey;
 
                             &::before {
                                 content: "";
                                 position: absolute;
                                 left: -50px;
                                 width: 100px;
-                                height: 100px;
+                                height: 100%;
                                 background-color: $dark;
                                 border-radius: 50px;
                             }
 
                             &.oo1 {
-                                top: -50px;
+                                top: -90svh;
                                 border-bottom: 1px solid $bg_grey;
 
-                                &::before {
-                                    top: -50px;
-                                }
+                                // &::before {
+                                //     top: 0;
+                                // }
                             }
 
                             &.oo2 {
-                                bottom: -50px;
+                                bottom: -90svh;
                                 border-top: 1px solid $bg_grey;
                             }
 
@@ -807,8 +820,8 @@ input[type="password"]::-ms-clear {
             // position: relative;
             flex-grow: 1;
             width: 74%;
-            height: 95vh;
-            padding: 3.5%;
+            height: 97vh;
+            padding: 1.5em 3.5%;
             background-color: $bg_grey;
             box-sizing: border-box;
 
@@ -819,20 +832,23 @@ input[type="password"]::-ms-clear {
             h4 {
                 font-size: 20px;
                 color: $dark;
-                margin-bottom: 2.5svh;
+                margin-bottom: 3svh;
+                text-transform:uppercase
             }
 
             .scroll_bg {
                 width: 100%;
 
                 // height: 64svh;
-                height: calc(81svh - 72px);
+                height: calc(81svh - 52px);
+                
 
                 // padding: 0 .5%;
                 overflow-y: auto;
+                overflow-x: inherit;
 
                 &.hisory {
-                    height: calc(81svh - 87px);
+                    height: calc(85svh - 84px - 4svh);
                 }
 
                 &.outside {
@@ -865,7 +881,7 @@ input[type="password"]::-ms-clear {
 
 
             @include breakpoint("lg", "max") {
-                padding: 4svh 4%;
+                // padding: 4svh 4%;
 
                 @include border-radius(40px);
             }
@@ -881,7 +897,7 @@ input[type="password"]::-ms-clear {
                 height: auto;
                 padding: 20px;
 
-                @include border-radius(10px);
+                @include border-radius(12px);
 
                 .scroll_bg {
                     height: auto;
@@ -913,7 +929,7 @@ input[type="password"]::-ms-clear {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 2svh;
+                margin-bottom: 4svh;
                 padding-bottom: 2svh;
                 border-bottom: 1px solid $light_grey3;
                 letter-spacing: 0;
@@ -995,16 +1011,22 @@ input[type="password"]::-ms-clear {
                     right: 0;
                     z-index: 99;
                     width: 100%;
-                    color: $bg_grey;
+                    color: $white;
                     background-color: #252424;
                     border-radius: 0 0 10px 10px;
                     border: 0;
                     padding: .5em 1em;
                     font-size: 12px;
                     box-sizing: border-box;
+                    span{
+                        color: $light_grey3;
+                    }
 
                     a {
                         font-size: 12px;
+                    }
+                    img{
+                        filter: brightness(1.4);
                     }
 
                     .imgbox.arrow {
@@ -1017,6 +1039,8 @@ input[type="password"]::-ms-clear {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                // box-shadow: 0 0 10px rgba($dark, 0.25);
+                // border: 1px solid red;
 
                 &.form_result {
                     padding: 0 13%;
@@ -1038,8 +1062,9 @@ input[type="password"]::-ms-clear {
                     position: relative;
                     background: url(../img/point_info_bg.svg) no-repeat top left;
                     background-size: 100% auto;
-                    box-shadow: 0 0 10px rgba($dark, 0.25);
-                    border-radius: 10px;
+                    box-shadow: 0 0 5px rgba($dark, 0.25);
+                    border-radius: $b-24;
+                    margin: 5px;
 
                     // display: flex;
 
@@ -1048,6 +1073,10 @@ input[type="password"]::-ms-clear {
 
                     @include m___m {
                         font-size: 12px;
+
+                        border-radius: $b-12;
+
+                    margin: 0;
                     }
 
 
@@ -1064,12 +1093,12 @@ input[type="password"]::-ms-clear {
                         margin-top: 210px;
                         background-color: $white;
                         text-align: center;
-                        border-radius: 10px;
+                        border-radius: $b-24;
                         font-size: 22px;
 
                         .confirm {
                             position: absolute;
-                            top: -2.5em;
+                            top: -2.8vw;
                             right: 10%;
 
                             // bottom: 90px;
@@ -1210,15 +1239,18 @@ input[type="password"]::-ms-clear {
 
 
                         @include m___m {
+
                             margin-top: 23vw;
                             padding: 15px 0;
                             font-size: 14px;
+                            border-radius: $b-12;
 
                             .confirm {
-                                right: 5%;
-                                width: 35px;
-                                height: 35px;
-                                font-size: 11px;
+                                top: -1.7em;
+                                right: 5vw;
+                                width: 45px;
+                                height: 45px;
+                                font-size: 14px;
                                 border-width: 5px;
                                 padding: 0;
 
@@ -1246,7 +1278,7 @@ input[type="password"]::-ms-clear {
                             }
 
                             .point_label {
-                                font-size: 14px;
+                                font-size: 16px;
 
                                 p {
                                     font-size: 14px;
@@ -1265,16 +1297,24 @@ input[type="password"]::-ms-clear {
 
                             .point_amount {
                                 span {
-                                    font-size: 20px;
+                                    font-size: 22px;
                                 }
                             }
+                        }
+                        @include breakpoint("xs", "max"){
+
+                        justify-content: flex-start;
+                        padding: 4vw 5vw;
+
+                            box-sizing: border-box;
+
                         }
                     }
                 }
 
                 .form_list {
                     // margin-top: 3%;
-                    color: $logo_grey;
+                    color: $text_grey2;
 
                     span {
                         font-weight: 400;
@@ -1282,10 +1322,10 @@ input[type="password"]::-ms-clear {
 
                     .check_code {
                         // min-height: 150px;
-                        margin-bottom: 2.5svh;
+                        margin-bottom: 3svh;
 
                         input {
-                            font-size: 16px;
+                            font-size: 15px;
                         }
 
                         .line {
@@ -1339,7 +1379,7 @@ input[type="password"]::-ms-clear {
                         margin-top: 10px;
 
                         h4 {
-                            font-size: 16px;
+                            font-size: 18px;
                             color: $dark;
                             margin-bottom: 20px;
                         }
@@ -1408,9 +1448,9 @@ input[type="password"]::-ms-clear {
                     img {
                         position: absolute;
                         right: 10px;
-                        top: 60%;
-                        width: 30px;
-                        height: 30px;
+                        top: 65%;
+                        width: 25px;
+                        height: 25px;
                         transform: translateY(-50%);
                         cursor: pointer;
                         display: block;
@@ -1418,8 +1458,8 @@ input[type="password"]::-ms-clear {
 
                     @include m___m {
                         img {
-                            width: 20px;
-                            height: 20px;
+                            width: 24px;
+                            height: 24px;
                         }
                     }
                 }
@@ -1478,7 +1518,9 @@ input[type="password"]::-ms-clear {
                     }
 
                     .btn_blue {
-                        width: 13em;
+                        min-width: 10em;
+                        width: fit-content;
+                        padding: 1em 2em;
                     }
 
                     @include m___m {
@@ -1515,16 +1557,23 @@ input[type="password"]::-ms-clear {
                     .list_PC {
                         table {
                             width: 100%;
+                            // max-height: 71%;
                             border-collapse: separate;
                             border-spacing: 0;
 
                             th,
                             td {
-                                padding: .55em .3em;
+                                padding: 1svh .4em;
                                 text-align: center;
                                 line-height: 1.5;
                                 color: $dark;
                                 vertical-align: middle;
+                            }
+                            th{
+                                padding: 1.2svh 0;
+
+                                // text-align: center;
+
                             }
 
                             th:first-child {
@@ -1538,11 +1587,13 @@ input[type="password"]::-ms-clear {
 
                             th:last-child {
                                 border-radius: 0 10px 10px 0;
-                                padding-right: .8em;
+                                padding-right: 1.5vw;
+                                text-align: right;
                             }
 
                             td:last-child {
-                                padding-right: .8em;
+                                text-align: right;
+                                padding-right: 1.5vw;
                             }
 
                             th {
@@ -1595,9 +1646,12 @@ input[type="password"]::-ms-clear {
                                 }
 
                                 b {
-                                    width: 2.5em;
+                                    width: 3em;
                                     display: inline-block;
-                                    text-align: left;
+                                    text-align: right;
+                                    background-color: $white;
+                                    padding: 0 .5em;
+                                    border-radius: 50px;
                                 }
                             }
 
@@ -1640,22 +1694,45 @@ input[type="password"]::-ms-clear {
                                         align-items: center;
 
                                         // font-size: 18px;
+                                        // .acc_date{
+                                        //     order: 2;
+                                        // }
                                         .list_text_right {
-                                            text-align: right;
+                                            // text-align: right;
+                                            align-self: flex-start;
+                                            padding-top: .2em;
+                                            i{
+                                                position: relative;
+                                                z-index: 2;
+
+                                            }
+                                            b{
+                                                // background-color: rgba($color: $bg_grey, $alpha: 0.5);
+                                                border-radius: 50px;
+                                                // margin-left: -2.1em;
+                                                // padding-left: 2.1em;
+                                                // margin-right: -.3em;
+                                                // padding-right: .8em;
+                                                text-align: right;
+                                                background-color: $bg_grey;
+                                                padding: 0 .5em;
+                                                border-radius: 50px;
+                                            }
                                         }
 
                                         & > span {
                                             display: block;
-                                            width: 100%;
+                                            // width: 100%;
                                             line-height: 1.85;
                                             font-size: 14px;
+                                            
                                         }
 
                                         i.imgbox {
                                             width: 1em;
                                             height: 1em;
                                             cursor: pointer;
-                                            margin-right: .5em;
+                                            margin-left: .5em;
                                             margin-bottom: .5em;
                                             display: inline-block;
 
@@ -1693,9 +1770,9 @@ input[type="password"]::-ms-clear {
                                 }
 
                                 b {
-                                    width: 2.5em;
+                                    width: 3em;
                                     display: inline-block;
-                                    text-align: left;
+                                    text-align: right;
                                 }
                             }
                         }
@@ -1828,6 +1905,7 @@ input[type="password"]::-ms-clear {
                             color: $logo_grey;
                             font-size: 18px;
                             margin-top: .5em;
+                            padding-left: .85em;
                             letter-spacing: 0;
 
                             span {
@@ -1857,7 +1935,7 @@ input[type="password"]::-ms-clear {
                     }
 
 
-                    @include m___m {
+                    @include breakpoint("sm", "max") {
                         // margin-left: -0.35em;
                         // margin-right: -0.35em;
                         .item {
@@ -1866,10 +1944,22 @@ input[type="password"]::-ms-clear {
 
                             // padding: 0.35em;
                             .price {
-                                font-size: 10px;
+                                font-size: 18px;
 
                                 span {
-                                    font-size: 14px;
+                                    font-size: 24px;
+                                }
+                            }
+                        }
+                    }
+                    @include breakpoint("xs", "max") {
+                        .item {
+                            width: 50%;
+                            .price {
+                                font-size: 18px;
+
+                                span {
+                                    font-size: 24px;
                                 }
                             }
                         }
@@ -1982,7 +2072,7 @@ input[type="password"]::-ms-clear {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 2.3svh 10%;
+                padding: 2.1svh 10%;
                 color: $logo_grey;
                 letter-spacing: 0;
                 border-bottom: 1px solid $light_grey4;
@@ -2140,8 +2230,8 @@ input[type="password"]::-ms-clear {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: .5svh;
-    margin-bottom: 1svh;
+    margin-top: 1.5svh;
+    margin-bottom: 1.5svh;
 
     .page {
         display: flex;
@@ -2285,7 +2375,7 @@ input[type="password"]::-ms-clear {
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            padding: 0 4rem;
+            padding: 0 3rem;
 
             // border: 1px solid red;
             box-sizing: border-box;
@@ -2326,6 +2416,10 @@ input[type="password"]::-ms-clear {
             color: $logo_grey;
             text-align: center;
             line-height: 1.5;
+            &.text_left{
+                text-align: justify;
+                text-align-last: left; 
+            }
         }
 
         .confirm {
@@ -2333,7 +2427,7 @@ input[type="password"]::-ms-clear {
             width: 30%;
 
             // max-width: 7em;
-            min-width: 8em;
+            min-width: 10em;
             margin-top: auto;
             padding: 1.2em 0;
 

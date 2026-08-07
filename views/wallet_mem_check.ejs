@@ -115,7 +115,7 @@
                     <!-- tab1 ed-->
                  </div>
             </div>
-            <a href="mailto:service@kiwipin.com.tw" class="email_info">service@kiwipin.com.tw</a>
+            <a href="mailto:service@kiwipin.com" class="email_info">service@kiwipin.com</a>
         </div>
     </div>
 
@@ -381,7 +381,7 @@
         // "MESSAGE_TYPE":"F", "SYSTEM_MESSAGE": "[%WL_CHECK_REMIND_F%]", "DEDUCT_AMOUNT": "4688", "WALLET_AMOUNT": "1030",
         // "SYSTEM_MESSAGE":"[%WL_CHECK_U_PAY_PASSWORD_HINT_F_END%]", "DEDUCT_AMOUNT": "4688", "WALLET_AMOUNT": "34814", 
         "SYSTEM_MESSAGE":"[%WL_CHECK_U_PAY_PASSWORD_HINT_F%]", "DEDUCT_AMOUNT": "4688", "WALLET_AMOUNT": "34814",
-        "data":"eyJNU0dfVFlQRSI6IjAxMDAiLCJQQ09ERSI6IjMwMDAwMCIsIkNJRCI6IkMwMDAwNDAwMTAwMDEiLCJDT0lEIjoiUFAyMDI1MDkxMTE1MjYxMDYwNjgzMCIsIkNVSUQiOiJVU0QiLCJQQUlEIjoiQ09QS1dQMDkiLCJBTU9VTlQiOiI0Ni44OCIsIlJFVFVSTl9VUkwiOiJodHRwczpcL1wvc3RhZ2UtYXBpLnA5OXBheS5jb21cL0tJV0lcL3JldHVybnVybCIsIlBST0RVQ1RfSUQiOiJUV0RfMTUwMC4wMCIsIlBST0RVQ1RfTkFNRSI6IlRlc3QgUyAxNTAwLjAwIFRXRCIsIlVTRVJfQUNDVElEIjoiVVNFUl8xMjM0NTYiLCJVU0VSX0lQIjoiMTExLjI0MS4xMzYuMTUzIiwiTUVNTyI6IiIsIkVYVEVOU0lPTiI6IiIsIkVSUUMiOiJGV2xCMlhFNGhQa29GT0dOeWtudTZcL1NJalBRPSJ9", "CID_NAME": "P99 \u6e2c\u8a66\u74b0\u5883", "PRODUCT_NAME": "Test S 1500.00 TWD", "LanguageList": { "en_US": "English", "zh_TW": "\u4e2d\u6587" }, 
+        "data":"eyJNU0dfVFlQRSI6IjAxMDAiLCJQQ09ERSI6IjMwMDAwMCIsIkNJRCI6IkMwMDAwNDAwMTAwMDEiLCJDT0lEIjoiUFAyMDI1MDkxMTE1MjYxMDYwNjgzMCIsIkNVSUQiOiJVU0QiLCJQQUlEIjoiQ09QS1dQMDkiLCJBTU9VTlQiOiI0Ni44OCIsIlJFVFVSTl9VUkwiOiJodHRwczpcL1wvc3RhZ2UtYXBpLnA5OXBheS5jb21cL0tJV0lcL3JldHVybnVybCIsIlBST0RVQ1RfSUQiOiJUV0RfMTUwMC4wMCIsIlBST0RVQ1RfTkFNRSI6IlRlc3QgUyAxNTAwLjAwIFRXRCIsIlVTRVJfQUNDVElEIjoiVVNFUl8xMjM0NTYiLCJVU0VSX0lQIjoiMTExLjI0MS4xMzYuMTUzIiwiTUVNTyI6IiIsIkVYVEVOU0lPTiI6IiIsIkVSUUMiOiJGV2xCMlhFNGhQa29GT0dOeWtudTZcL1NJalBRPSJ9", "CID_NAME": "P99 \u6e2c\u8a66\u74b0\u5883", "PRODUCT_NAME": "Test S 1500.00 TWD", "LanguageList": { "en_US": "English", "zh_TW": "\u4e2d\u6587","ja_JP": "日本語"},
         "StringID": {
             "en_US": {
                 "WL_TAB_TOPUP": "Top Up",
@@ -402,7 +402,8 @@
                 "WL_CHECK_PAYMENT_F":"Payment Failed",
                 "WL_CHECK_REMIND_F":"Your wallet balance is insufficient.Please top up points before proceeding with the payment.",
                 "WL_TOPUP_BTN":"Wallet Top-Up",
-                "WL_CANCEL_BTN":"Cancel Payment"
+                "WL_CANCEL_BTN":"Cancel Payment",
+                "WL_LOGOUT":"LOGOUT"
             },
             "zh_TW": {
                 "WL_TAB_TOPUP": "儲值",
@@ -423,7 +424,28 @@
                 "WL_CHECK_PAYMENT_F": "交易失敗",
                 "WL_CHECK_REMIND_F": "您的錢包餘額不足，請先儲值點數後再進行交易",
                 "WL_TOPUP_BTN": "前往儲值",
-                "WL_CANCEL_BTN": "取消交易"
+                "WL_CANCEL_BTN": "取消交易",
+                "WL_LOGOUT":"登出"
+            },
+            "ja_JP":{
+                "WL_TAB_TOPUP":"チャージ",
+                "WL_POINT":"ポイント",
+                "WL_CHECK_PAYMENT":"取引確認",
+                "WL_CHECK_PAYMENT_F":"取引失敗",
+                "WL_DEDUCT_AMOUNT_TITLE":"取引ポイント",
+                "WL_WALLET_AMOUNT_TITLE":"ウォレットポイント",
+                "WL_CID_NAME_TITLE":"サービス名",
+                "WL_PRODUCT_NAME_TITLE":"商品名",
+                "WL_CHECK_U_PAY_PASSWORD_TITLE":"取引パスワードを入力してください",
+                "WL_CHECK_U_PAY_PASSWORD_HINT":"取引パスワードは6桁の数字です",
+                "WL_CHECK_BTN":"取引を確定",
+                "WL_TOPUP_BTN":"チャージへ進む",
+                "WL_CANCEL_BTN":"取引をキャンセル",
+                "WL_CHECK_REMIND_F":"ウォレットの残高が不足しています。先にポイントをチャージしてから取引を行ってください",
+                "WL_CHECK_U_PAY_PASSWORD_HINT_F":"取引パスワードは既に [$$] 回間違っています。残り [$$] 回のチャンスがあります",
+                "WL_CHECK_U_PAY_PASSWORD_HINT_F_END":"取引パスワードの誤入力回数が上限に達しました",
+                "WL_LOGOUT":"ログアウト"
+
             }
         },
         "StringValue":{

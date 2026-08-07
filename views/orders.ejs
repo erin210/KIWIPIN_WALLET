@@ -129,7 +129,7 @@
 
 
             </div>
-            <a href="mailto:service@kiwipin.com.tw" class="email_info">service@kiwipin.com.tw</a>
+            <a href="mailto:service@kiwipin.com" class="email_info">service@kiwipin.com</a>
         </div>
     </div>
 
@@ -177,7 +177,7 @@
                             <td class="acc_product">${item.PRODUCT_NAME}</td>
                             <td class="acc_order">${item.COID}</td>
                             <td class="acc_point">${amountHTML}</td>
-                            <td class="acc_balance">${item.AMOUNT_AFTER}</td>
+                            <td class="acc_balance">${formatCurrency(Number(item.AMOUNT_AFTER))}</td>
                         </tr>`;
                 $('#historyTable').append(tableHTML);
             });
@@ -201,7 +201,6 @@
                 groupedData[key].forEach(item => {
                     const amountHTML = formatAmount(item.AMOUNT_ADD_USE);
                     const dateHTML = item.CreateTime_at.substring(5);
-
                     const listINFO_HTML = `<li>
                                 <div class="list_head">
                                     <div>
@@ -228,7 +227,7 @@
                                     </div>
                                     <div>
                                         <span class="list_text_left WL_HISTORY_AMOUNT_AFTER">剩餘點數</span>
-                                        <span class="list_text_right acc_balance">${item.AMOUNT_AFTER}</span>
+                                        <span class="list_text_right acc_balance">${formatCurrency(Number(item.AMOUNT_AFTER))}</span>
                                     </div>
                                 </div>
                             </li>`;
@@ -243,11 +242,12 @@
 
              //判斷-正數/負數
             function formatAmount(amount) {
+                // const this_amount=Number(amount);
                 if (amount.charAt(0) !== '-') {
-                    return `<i class="icon account_add"><img src="<%- wallet %>/assets/img/icon_account_add.svg" alt=""></i><b>${amount}</b>`;
+                    return `<i class="icon account_add"><img src="<%- wallet %>/assets/img/icon_account_add.svg" alt=""></i><b>${formatCurrency(Number(amount))}</b>`;
                 } else {
-                    const positive = amount.replace('-', ''); // 去掉負號
-                    return `<i class="icon account_deduct"><img src="<%- wallet %>/assets/img/icon_account_deduct.svg" alt=""></i><b>${positive}</b>`;
+                    const positive = Number(amount.replace('-', '')); // 去掉負號
+                    return `<i class="icon account_deduct"><img src="<%- wallet %>/assets/img/icon_account_deduct.svg" alt=""></i><b>${formatCurrency(positive)}</b>`;
                 }
             }
 
@@ -266,6 +266,14 @@
             function formatTime(tt) {
                 const [datePart, timePart] = tt.split(" ");
                 return `${datePart} <span>${timePart}</span>`;
+            }
+            //千元標註
+            function formatCurrency(number) {
+                // 確保 number 是一個整數
+                if (!Number.isInteger(number)) return null;
+
+                // 將整數轉成字串，並利用正規表達式添加逗號
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
 
             // 顯示頁碼
@@ -353,7 +361,179 @@
     </script>
 
     <script>
-        initFunction({ "Type": "HISTORY", "LanguageList": { "en_US": "English", "zh_TW": "\u4e2d\u6587" }, "StringID": { "en_US": { "WL_HISTORY_AMOUNT_ADD_USE": "Points Used", "WL_HISTORY_AMOUNT_AFTER": "Remaining Points", "WL_HISTORY_CID_NAME": "Service", "WL_HISTORY_COID": "Order ID", "WL_HISTORY_DATE": "Date", "WL_HISTORY_INFO_EMPTY": "No History Found", "WL_HISTORY_PRODUCT_NAME": "Product", "WL_TAB_CHANGE_PASSWORD": "Account Settings", "WL_TAB_CHANGE_PAY_PASSWORD": "Payment Settings", "WL_TAB_HISTORY": "History", "WL_TAB_HOME": "Overview" }, "zh_TW": { "WL_HISTORY_AMOUNT_ADD_USE": "\u4ea4\u6613\u9ede\u6578", "WL_HISTORY_AMOUNT_AFTER": "\u5269\u9918\u9ede\u6578", "WL_HISTORY_CID_NAME": "\u670d\u52d9\u540d\u7a31", "WL_HISTORY_COID": "\u8a02\u55ae\u7de8\u865f", "WL_HISTORY_DATE": "\u4ea4\u6613\u65e5\u671f", "WL_HISTORY_INFO_EMPTY": "\u7121\u4ea4\u6613\u6b77\u53f2", "WL_HISTORY_PRODUCT_NAME": "\u5546\u54c1\u540d\u7a31", "WL_TAB_CHANGE_PASSWORD": "\u5e33\u6236\u8a2d\u5b9a", "WL_TAB_CHANGE_PAY_PASSWORD": "\u4ea4\u6613\u8a2d\u5b9a", "WL_TAB_HISTORY": "\u6b77\u53f2\u4ea4\u6613", "WL_TAB_HOME": "\u7e3d\u89bd" } }, "U_EMAIL": "kiwi001@kiwipin.com", "PAGE_COUNT": "55", "PAGE_SELECT": "2", "WALLET_HISTORY": [{ "serial": 11, "CID_NAME": "\u602a\u8c93\u904a\u6232 \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240220102920138696", "PRODUCT_NAME": "20", "AMOUNT_BEFORE": "10000", "AMOUNT_ADD": "0", "AMOUNT_USE": "16", "AMOUNT_ADD_USE": "-16", "AMOUNT_AFTER": "9984", "CreateTime_at": "2024-02-20 10:33:33", "CreateDate_at": "2024-02-20" }, { "serial": 12, "CID_NAME": "\u602a\u8c93\u904a\u6232 \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240220103950058936", "PRODUCT_NAME": "Recruitment of Heaven", "AMOUNT_BEFORE": "9984", "AMOUNT_ADD": "0", "AMOUNT_USE": "91", "AMOUNT_ADD_USE": "-91", "AMOUNT_AFTER": "9893", "CreateTime_at": "2024-02-20 10:40:15", "CreateDate_at": "2024-02-20" }, { "serial": 13, "CID_NAME": "\u602a\u8c93\u904a\u6232 \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240220104500774235", "PRODUCT_NAME": "\u3010\u5468\u3011\u7075\u5ba0\u793c\u5305(\u3010Week\u3011Spirit Pet Gift Pack)", "AMOUNT_BEFORE": "9893", "AMOUNT_ADD": "0", "AMOUNT_USE": "91", "AMOUNT_ADD_USE": "-91", "AMOUNT_AFTER": "9802", "CreateTime_at": "2024-02-20 10:45:19", "CreateDate_at": "2024-02-20" }, { "serial": 14, "CID_NAME": "Tripday HK \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240305112910024608", "PRODUCT_NAME": "", "AMOUNT_BEFORE": "9802", "AMOUNT_ADD": "0", "AMOUNT_USE": "100", "AMOUNT_ADD_USE": "-100", "AMOUNT_AFTER": "9702", "CreateTime_at": "2024-03-05 11:29:28", "CreateDate_at": "2024-03-05" }, { "serial": 15, "CID_NAME": "Tripday HK \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240306160207529877", "PRODUCT_NAME": "", "AMOUNT_BEFORE": "9702", "AMOUNT_ADD": "0", "AMOUNT_USE": "100", "AMOUNT_ADD_USE": "-100", "AMOUNT_AFTER": "9602", "CreateTime_at": "2024-03-06 16:02:18", "CreateDate_at": "2024-03-06" }, { "serial": 16, "CID_NAME": "SENSESTAR \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240313140220256888", "PRODUCT_NAME": "\u661f\u5e63", "AMOUNT_BEFORE": "9602", "AMOUNT_ADD": "0", "AMOUNT_USE": "3525", "AMOUNT_ADD_USE": "-3525", "AMOUNT_AFTER": "6077", "CreateTime_at": "2024-03-13 14:03:12", "CreateDate_at": "2024-03-13" }, { "serial": 17, "CID_NAME": "SENSESTAR \u6e2c\u8a66\u74b0\u5883", "COID": "PP20240313150846584148", "PRODUCT_NAME": "\u661f\u5e63", "AMOUNT_BEFORE": "6077", "AMOUNT_ADD": "0", "AMOUNT_USE": "3525", "AMOUNT_ADD_USE": "-3525", "AMOUNT_AFTER": "2552", "CreateTime_at": "2024-03-13 15:09:08", "CreateDate_at": "2024-03-13" }, { "serial": 18, "CID_NAME": "KIWI \u9322\u5305\u8cfc\u9ede", "COID": "KB20240314030735", "PRODUCT_NAME": "KIWI \u9322\u5305 1000 \u9ede", "AMOUNT_BEFORE": "2552", "AMOUNT_ADD": "1000", "AMOUNT_USE": "0", "AMOUNT_ADD_USE": "1000", "AMOUNT_AFTER": "3552", "CreateTime_at": "2024-03-14 11:08:08", "CreateDate_at": "2024-03-14" }, { "serial": 19, "CID_NAME": "KIWI \u9322\u5305\u8cfc\u9ede", "COID": "KB20240314030853", "PRODUCT_NAME": "KIWI \u9322\u5305 1000 \u9ede", "AMOUNT_BEFORE": "3552", "AMOUNT_ADD": "1000", "AMOUNT_USE": "0", "AMOUNT_ADD_USE": "1000", "AMOUNT_AFTER": "4552", "CreateTime_at": "2024-03-14 11:09:12", "CreateDate_at": "2024-03-14" }, { "serial": 20, "CID_NAME": "KIWI \u9322\u5305\u8cfc\u9ede", "COID": "KB20240314030921", "PRODUCT_NAME": "KIWI \u9322\u5305 1000 \u9ede", "AMOUNT_BEFORE": "4552", "AMOUNT_ADD": "1000", "AMOUNT_USE": "0", "AMOUNT_ADD_USE": "1000", "AMOUNT_AFTER": "5552", "CreateTime_at": "2024-03-14 11:09:36", "CreateDate_at": "2024-03-14" }]});
+        initFunction(
+            {
+    "Type": "HISTORY",
+    "LanguageList": { "en_US": "English", "zh_TW": "\u4e2d\u6587","ja_JP": "日本語"},
+    "StringID": {
+        "en_US": {
+            "WL_HISTORY_AMOUNT_ADD_USE": "Points Used",
+            "WL_HISTORY_AMOUNT_AFTER": "Points left",
+            "WL_HISTORY_CID_NAME": "Service",
+            "WL_HISTORY_COID": "Order ID",
+            "WL_HISTORY_DATE": "Date",
+            "WL_HISTORY_INFO_EMPTY": "No History Found",
+            "WL_HISTORY_PRODUCT_NAME": "Product",
+            "WL_TAB_CHANGE_PASSWORD": "Account Settings",
+            "WL_TAB_CHANGE_PAY_PASSWORD": "Payment Settings",
+            "WL_TAB_HISTORY": "History",
+            "WL_TAB_HOME": "Overview",
+            "WL_LOGOUT":"LOGOUT"
+        },
+        "zh_TW": {
+            "WL_HISTORY_AMOUNT_ADD_USE": "交易點數",
+            "WL_HISTORY_AMOUNT_AFTER": "剩餘點數",
+            "WL_HISTORY_CID_NAME": "服務名稱",
+            "WL_HISTORY_COID": "訂單編號",
+            "WL_HISTORY_DATE": "交易日期",
+            "WL_HISTORY_INFO_EMPTY": "無交易歷史",
+            "WL_HISTORY_PRODUCT_NAME": "商品名稱",
+            "WL_TAB_CHANGE_PASSWORD": "帳戶設定",
+            "WL_TAB_CHANGE_PAY_PASSWORD": "交易設定",
+            "WL_TAB_HISTORY": "歷史交易",
+            "WL_TAB_HOME": "總覽",
+            "WL_LOGOUT":"登出"
+        },
+        "ja_JP": {
+            "WL_HISTORY_DATE":"取引日時",
+            "WL_HISTORY_CID_NAME":"サービス名",
+            "WL_HISTORY_PRODUCT_NAME":"商品名 ",
+            "WL_HISTORY_COID":"注文番号",
+            "WL_HISTORY_AMOUNT_ADD_USE":"取引ポイント",
+            "WL_HISTORY_AMOUNT_AFTER":"残りポイント",
+            "WL_HISTORY_INFO_EMPTY":"取引履歴がありません",
+            "WL_TAB_HOME":"概要",
+            "WL_TAB_HISTORY":"取引履歴",
+            "WL_TAB_CHANGE_PAY_PASSWORD":"取引設定",
+            "WL_TAB_CHANGE_PASSWORD":"アカウント設定",
+            "WL_TAB_TOPUP":"チャージ",
+            "WL_LOGOUT":"ログアウト"
+        }
+    },
+    "U_EMAIL": "kiwi001@kiwipin.com",
+    "PAGE_COUNT": "55",
+    "PAGE_SELECT": "2",
+    "WALLET_HISTORY": [
+        {
+            "serial": 11,
+            "CID_NAME": "怪獸遊戲活動服裝",
+            "COID": "PP20240220102920138696",
+            "PRODUCT_NAME": "20",
+            "AMOUNT_BEFORE": "10000",
+            "AMOUNT_ADD": "0",
+            "AMOUNT_USE": "16",
+            "AMOUNT_ADD_USE": "-16",
+            "AMOUNT_AFTER": "9984",
+            "CreateTime_at": "2024-02-20 10:33:33",
+            "CreateDate_at": "2024-02-20"
+        },
+        {
+            "serial": 12,
+            "CID_NAME": "怪獸遊戲活動虛寶",
+            "COID": "PP20240220103950058936",
+            "PRODUCT_NAME": "Recruitment of Heaven",
+            "AMOUNT_BEFORE": "9984",
+            "AMOUNT_ADD": "0",
+            "AMOUNT_USE": "91",
+            "AMOUNT_ADD_USE": "-91",
+            "AMOUNT_AFTER": "9893",
+            "CreateTime_at": "2024-02-20 10:40:15",
+            "CreateDate_at": "2024-02-20"
+        },
+        {
+            "serial": 13,
+            "CID_NAME": "怪獸遊戲鑽石10顆",
+            "COID": "PP20240220104500774235",
+            "PRODUCT_NAME": "【周】靈寵禮包(【Week】Spirit Pet Gift Pack)",
+            "AMOUNT_BEFORE": "9893",
+            "AMOUNT_ADD": "0",
+            "AMOUNT_USE": "91",
+            "AMOUNT_ADD_USE": "-91",
+            "AMOUNT_AFTER": "9802",
+            "CreateTime_at": "2024-02-20 10:45:19",
+            "CreateDate_at": "2024-02-20"
+        },
+        {
+            "serial": 14,
+            "CID_NAME": "貓咪大戰爭活動寶箱",
+            "COID": "PP20240305112910024608",
+            "PRODUCT_NAME": "",
+            "AMOUNT_BEFORE": "9802",
+            "AMOUNT_ADD": "0",
+            "AMOUNT_USE": "100",
+            "AMOUNT_ADD_USE": "-100",
+            "AMOUNT_AFTER": "9702",
+            "CreateTime_at": "2024-03-05 11:29:28",
+            "CreateDate_at": "2024-03-05"
+        },
+        {
+            "serial": 15,
+            "CID_NAME": "貓咪大戰爭活動服裝",
+            "COID": "PP20240306160207529877",
+            "PRODUCT_NAME": "",
+            "AMOUNT_BEFORE": "9702",
+            "AMOUNT_ADD": "0",
+            "AMOUNT_USE": "100",
+            "AMOUNT_ADD_USE": "-100",
+            "AMOUNT_AFTER": "9602",
+            "CreateTime_at": "2024-03-06 16:02:18",
+            "CreateDate_at": "2024-03-06"
+        },
+        {
+            "serial": 16,
+            "CID_NAME": "貓咪大戰爭虛寶1個",
+            "COID": "PP20240313140220256888",
+            "PRODUCT_NAME": "星幣",
+            "AMOUNT_BEFORE": "9602",
+            "AMOUNT_ADD": "0",
+            "AMOUNT_USE": "3525",
+            "AMOUNT_ADD_USE": "-3525",
+            "AMOUNT_AFTER": "6077",
+            "CreateTime_at": "2024-03-13 14:03:12",
+            "CreateDate_at": "2024-03-13"
+        },
+        {
+            "serial": 17,
+            "CID_NAME": "貓咪大戰爭活動寶箱乙箱乙箱乙箱乙箱乙箱乙箱",
+            "COID": "PP20240313150846584148",
+            "PRODUCT_NAME": "星幣",
+            "AMOUNT_BEFORE": "6077",
+            "AMOUNT_ADD": "0",
+            "AMOUNT_USE": "35250",
+            "AMOUNT_ADD_USE": "-35250",
+            "AMOUNT_AFTER": "2552",
+            "CreateTime_at": "2024-03-13 15:09:08",
+            "CreateDate_at": "2024-03-13"
+        },
+        {
+            "serial": 18,
+            "CID_NAME": "KIWI 錢包購點",
+            "COID": "KB20240314030853",
+            "PRODUCT_NAME": "KIWI 錢包 1000 點",
+            "AMOUNT_BEFORE": "3552",
+            "AMOUNT_ADD": "1000",
+            "AMOUNT_USE": "0",
+            "AMOUNT_ADD_USE": "1000",
+            "AMOUNT_AFTER": "4552",
+            "CreateTime_at": "2024-03-14 11:09:12",
+            "CreateDate_at": "2024-03-14"
+        },
+        {
+            "serial": 19,
+            "CID_NAME": "KIWI 錢包購點",
+            "COID": "KB20240314030921",
+            "PRODUCT_NAME": "KIWI 錢包 1000 點",
+            "AMOUNT_BEFORE": "4552",
+            "AMOUNT_ADD": "1000",
+            "AMOUNT_USE": "0",
+            "AMOUNT_ADD_USE": "1000",
+            "AMOUNT_AFTER": "5552",
+            "CreateTime_at": "2024-03-14 11:09:36",
+            "CreateDate_at": "2024-03-14"
+        }
+    ]
+}
+        );
     </script>
 </body>
 

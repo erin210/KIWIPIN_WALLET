@@ -6,16 +6,16 @@ const ejs = require('ejs');
 const path = require('path');
 
 // 測試機 https://stage-www.kiwipin.com/
-const CDN_STAGE = 'https://stage-www-page.kiwipin.com';
-const WALLET_CDN_STAGE = 'https://stage-wallet.kiwipin.com';
-const WALLE_PAGE_STAGE = 'https://stage-wallet-page.kiwipin.com';
-const WALLE_PAGE_STAGE_T = 'https://stage-wallet-page-t.kiwipin.com';
+const CDN_STAGE = 'https://stage-page.kiwipin.com/wallet';//
+const WALLET_CDN_STAGE = 'https://stage-wallet.kiwipin.com';//
+const WALLE_PAGE_STAGE = 'https://stage-page.kiwipin.com/wallet';
+const WALLE_PAGE_STAGE_T = 'https://https://stage-page.kiwipin.com/wallet';
 
 // 正式機 https://www.kiwipin.com/
-const CDN_PROD = 'https://www-page.kiwipin.com';
+const CDN_PROD = 'https://page.kiwipin.com/wallet';
 const WALLET_CDN_PROD = 'https://wallet.kiwipin.com';
-const WALLET_PAGE_PROD = 'https://wallet-page.kiwipin.com/';
-const WALLET_PAGE_PROD_T = 'https://wallet-page-t.kiwipin.com/';
+const WALLET_PAGE_PROD = 'https://page.kiwipin.com/wallet';
+const WALLET_PAGE_PROD_T = 'https://page.kiwipin.com/wallet';
 
 //檔案版好參數
 const version = '?v=20250825a';

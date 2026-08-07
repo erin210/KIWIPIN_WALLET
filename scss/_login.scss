@@ -12,7 +12,7 @@ body {
     font-weight: 400;
     font-style: normal;
     font-size: 100%;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
 
     &.walletLogin {
         // background-color: $dark;
@@ -94,7 +94,7 @@ body {
                         margin-bottom: 5%;
 
                         img {
-                            width: 25%;
+                            width: 23%;
                         }
                     }
 
@@ -224,11 +224,12 @@ body {
 
                             // font-weight: 300;
                             color: $text_grey2;
-                            margin-bottom: 5svh;
+                            margin-bottom: 9svh;
                             line-height: 1.4;
 
                             @include breakpoint("md", "max") {
                                 font-size: 16px;
+                                margin-bottom: 3em;
                             }
                         }
 
@@ -245,7 +246,7 @@ body {
                                     width: fit-content;
                                     background-color: $text_grey2;
                                     color: $white;
-                                    margin-top: 14px;
+                                    margin-top: 1.8svh;
                                     border-radius: 0 10px 10px 0;
                                     text-decoration: none;
 
@@ -292,6 +293,7 @@ body {
                         .terms {
                             margin-bottom: 1em;
                             padding-right: 10px;
+                            padding-left: 1.5em;
 
                             & > input {
                                 width: auto;
@@ -299,18 +301,19 @@ body {
 
                             a {
                                 color: $text_grey2;
+                                line-height: 1.5;
                             }
 
                             &.custom-checkbox {
                                 label {
-                                    font-size: 18px;
+                                    font-size: 16px;
 
                                     &::before {
-                                        margin-top: 3px;
+                                        margin-top: 2px;
                                     }
 
                                     &::after {
-                                        margin-top: 3px;
+                                        margin-top: 2px;
                                     }
 
                                     @include breakpoint("lg", "max") {
@@ -333,10 +336,11 @@ body {
                                 display: block;
                                 font-size: 24px;
                                 margin: 25px 0;
+                                text-transform:uppercase
                             }
 
                             p {
-                                font-size: 12px;
+                                font-size: 14px;
                                 letter-spacing: 0;
 
                                 // white-space: nowrap;
@@ -371,10 +375,11 @@ body {
                             .terms {
                                 margin-top: 2em;
                                 margin-bottom: 2em;
+                                padding-left: 1.5em;
 
                                 &.custom-checkbox {
                                     label {
-                                        font-size: 12px;
+                                        font-size: 14px;
 
                                         &::before, &::after {
                                             margin-top: 0;
@@ -387,7 +392,7 @@ body {
 
                                         &::after {
                                             top: 3px;
-                                            left: 5px;
+                                            left: -16px;
                                         }
                                     }
                                 }
@@ -410,6 +415,12 @@ body {
             #apiWallet .container aside .tabs.tab_nnn {
                 display: none;
             }
+        }
+
+        .languageBox{
+            position: fixed;
+            top: .5em;
+            z-index: 999;
         }
     }
 }
